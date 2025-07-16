@@ -93,7 +93,7 @@ export default function VeronicaSegurosLanding() {
     "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1200&h=800&fit=crop",
     "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&h=800&fit=crop",
     "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1200&h=800&fit=crop",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=1200&h=800&fit=crop",
+    "https://images.unsplash.com/photo-1516901408257-500ed7566e6a?w=1200&h=800&fit=crop",
   ]
 
   useEffect(() => {
@@ -236,8 +236,12 @@ export default function VeronicaSegurosLanding() {
   const scrollSeguros = (dir: 'left' | 'right') => {
     if (segurosRowRef.current) {
       const container = segurosRowRef.current;
-      const cardWidth = 300; // ancho de la card
-      const gap = 32; // gap entre cards (8 * 4 = 32px)
+      // Detectar el ancho de pantalla para ajustar el scroll
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth < 768;
+      
+      const cardWidth = isMobile ? 280 : isTablet ? 300 : 320;
+      const gap = isMobile ? 16 : 24; // gap entre cards
       const scrollAmount = cardWidth + gap;
       
       const maxScroll = container.scrollWidth - container.clientWidth;
@@ -255,8 +259,12 @@ export default function VeronicaSegurosLanding() {
   const scrollToService = (index: number) => {
     if (segurosRowRef.current) {
       const container = segurosRowRef.current;
-      const cardWidth = 320; // Ancho de la card
-      const gap = 16; // Gap entre cards (8 * 2 = 16px)
+      // Detectar el ancho de pantalla para ajustar el scroll
+      const isMobile = window.innerWidth < 640;
+      const isTablet = window.innerWidth < 768;
+      
+      const cardWidth = isMobile ? 280 : isTablet ? 300 : 320;
+      const gap = isMobile ? 16 : 24;
       const scrollAmount = cardWidth + gap;
 
       const newScrollPosition = index * scrollAmount;
@@ -503,30 +511,30 @@ export default function VeronicaSegurosLanding() {
               </div>
             </div>
           </div>
-          <div className="relative px-12">
+          <div className="relative px-4 sm:px-8 md:px-12">
             {/* Fade izquierdo */}
             {showFade && (
-              <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-background to-transparent z-20" />
+              <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 md:w-24 bg-gradient-to-r from-background to-transparent z-20" />
             )}
             {/* Flecha izquierda */}
             {showFade && (
               <button
                 type="button"
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-30 bg-card hover:bg-accent rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-border"
+                className="absolute left-1 sm:left-2 top-1/2 -translate-y-1/2 z-30 bg-card hover:bg-accent rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors border border-border"
                 onClick={() => scrollSeguros('left')}
                 aria-label="Ver anterior"
               >
-                <ChevronLeft className="w-6 h-6 text-foreground" />
+                <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6 text-foreground" />
               </button>
             )}
             {/* Contenedor del carrusel */}
             <div
               ref={segurosRowRef}
-              className="flex gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory py-4 px-2"
+              className="flex gap-4 sm:gap-6 overflow-x-auto scrollbar-hide snap-x snap-mandatory py-4 px-2"
               style={{ scrollBehavior: 'smooth' }}
             >
               {services.map((service, index) => (
-                <div key={index} className="snap-center flex-shrink-0 w-[320px]">
+                <div key={index} className="snap-center flex-shrink-0 w-[280px] sm:w-[300px] md:w-[320px]">
                   <SeguroCard
                     icon={service.icon}
                     title={service.title}
@@ -547,16 +555,16 @@ export default function VeronicaSegurosLanding() {
             {showFade && (
               <button
                 type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-30 bg-card hover:bg-accent rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-border"
+                className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 z-30 bg-card hover:bg-accent rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors border border-border"
                 onClick={() => scrollSeguros('right')}
                 aria-label="Ver siguiente"
               >
-                <ChevronRight className="w-6 h-6 text-foreground" />
+                <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6 text-foreground" />
               </button>
             )}
             {/* Fade derecho */}
             {showFade && (
-              <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-background to-transparent z-20" />
+              <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 md:w-24 bg-gradient-to-l from-background to-transparent z-20" />
             )}
           </div>
           {/* Indicadores de página */}
@@ -588,7 +596,12 @@ export default function VeronicaSegurosLanding() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             <div className="text-center flex flex-col items-center">
-              <div className="relative w-full h-[200px] mb-4">
+              {/* Número del paso - Primero en mobile */}
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-6 md:order-3 md:my-4">
+                1
+              </div>
+              {/* Imagen */}
+              <div className="relative w-full h-[200px] mb-4 md:order-1 md:mb-4">
                 <img
                   src="/images/step-1.svg"
                   alt="Análisis de Riesgo"
@@ -596,17 +609,21 @@ export default function VeronicaSegurosLanding() {
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Análisis Gratuito de Riesgo</h3>
-              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
-                1
-              </div>
-              <p className="text-muted-foreground max-w-xs text-sm">
+              {/* Título */}
+              <h3 className="text-xl font-semibold mb-3 text-foreground md:order-2">Análisis Gratuito de Riesgo</h3>
+              {/* Descripción */}
+              <p className="text-muted-foreground max-w-xs text-sm md:order-4">
                 Analizamos tu actividad empresarial o independiente para identificar riesgos específicos y evaluar tus coberturas actuales.
               </p>
             </div>
 
             <div className="text-center flex flex-col items-center">
-              <div className="relative w-full h-[200px] mb-4">
+              {/* Número del paso - Primero en mobile */}
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-6 md:order-3 md:my-4">
+                2
+              </div>
+              {/* Imagen */}
+              <div className="relative w-full h-[200px] mb-4 md:order-1 md:mb-4">
                 <img
                   src="/images/step-2.svg"
                   alt="Cotización Personalizada"
@@ -614,17 +631,21 @@ export default function VeronicaSegurosLanding() {
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Propuesta Personalizada</h3>
-              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
-                2
-              </div>
-              <p className="text-muted-foreground max-w-xs text-sm">
+              {/* Título */}
+              <h3 className="text-xl font-semibold mb-3 text-foreground md:order-2">Propuesta Personalizada</h3>
+              {/* Descripción */}
+              <p className="text-muted-foreground max-w-xs text-sm md:order-4">
                 Te presento las mejores opciones del mercado adaptadas a tu perfil empresarial, con atención online y personalizada.
               </p>
             </div>
 
             <div className="text-center flex flex-col items-center">
-              <div className="relative w-full h-[200px] mb-4">
+              {/* Número del paso - Primero en mobile */}
+              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto mb-6 md:order-3 md:my-4">
+                3
+              </div>
+              {/* Imagen */}
+              <div className="relative w-full h-[200px] mb-4 md:order-1 md:mb-4">
                 <img
                   src="/images/step-3.svg"
                   alt="Implementación y Seguimiento"
@@ -632,11 +653,10 @@ export default function VeronicaSegurosLanding() {
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Implementación y Seguimiento</h3>
-              <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
-                3
-              </div>
-              <p className="text-muted-foreground max-w-xs text-sm">
+              {/* Título */}
+              <h3 className="text-xl font-semibold mb-3 text-foreground md:order-2">Implementación y Seguimiento</h3>
+              {/* Descripción */}
+              <p className="text-muted-foreground max-w-xs text-sm md:order-4">
                 Sin compromiso de contratación. Si decidís avanzar, te acompaño en la implementación y seguimiento continuo.
               </p>
             </div>
@@ -717,34 +737,50 @@ export default function VeronicaSegurosLanding() {
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-left text-foreground">
-                ¿Qué tipos de seguros ofrecen?
+                ¿Qué incluye el análisis gratuito del perfil de riesgo?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Ofrecemos una amplia gama de seguros: hogar, auto, vida, salud, viaje y más. Cada uno adaptado a tus necesidades específicas.
+                Evaluamos tu actividad comercial, identificamos riesgos específicos de tu sector, revisamos tus coberturas actuales y determinamos si necesitás ajustes o nuevas protecciones. Todo sin compromiso de contratación.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger className="text-left text-foreground">
-                ¿Cómo funciona el proceso de contratación?
+                ¿Qué diferencia hay entre ART común y ART con reducción de alícuotas?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Es muy simple: nos contactás, analizamos tus necesidades, te presentamos las mejores opciones y te acompañamos en todo el proceso.
+                La ART con reducción de alícuotas ofrece descuentos en las tarifas para PyMEs que cumplan ciertos requisitos de seguridad laboral. Esto puede generar ahorros significativos manteniendo la misma cobertura integral para tus empleados.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger className="text-left text-foreground">
-                ¿Qué pasa si necesito hacer un reclamo?
+                ¿Los monotributistas pueden acceder a obra social?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                Te acompañamos en todo el proceso de reclamo. Estamos disponibles 24/7 para ayudarte y asegurar que recibas la cobertura que necesitás.
+                Sí, existen opciones especiales de obra social para monotributistas y trabajadores independientes. Te ayudo a encontrar la cobertura médica que mejor se adapte a tu situación y presupuesto.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
               <AccordionTrigger className="text-left text-foreground">
-                ¿Pueden ayudarme a comparar diferentes aseguradoras?
+                ¿Qué cubre exactamente el seguro de responsabilidad civil profesional?
               </AccordionTrigger>
               <AccordionContent className="text-muted-foreground">
-                ¡Absolutamente! Trabajamos con las mejores aseguradoras del mercado y te ayudamos a encontrar la opción más conveniente para vos.
+                Protege ante reclamos de terceros por errores, omisiones o negligencias en el ejercicio de tu actividad profesional. Incluye defensa legal y cubre daños que puedas causar a clientes o terceros en el desarrollo de tu trabajo.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-5">
+              <AccordionTrigger className="text-left text-foreground">
+                ¿Trabajás con todas las aseguradoras?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Trabajo con las principales aseguradoras del país, todas de primer nivel y reconocidas por la SSN. Esto me permite ofrecerte múltiples opciones y encontrar la que mejor se adapte a tu perfil y presupuesto.
+              </AccordionContent>
+            </AccordionItem>
+            <AccordionItem value="item-6">
+              <AccordionTrigger className="text-left text-foreground">
+                ¿Cómo es el proceso si necesito hacer un siniestro?
+              </AccordionTrigger>
+              <AccordionContent className="text-muted-foreground">
+                Te acompaño en todo el proceso: desde la denuncia inicial hasta el cierre del siniestro. Coordino con la aseguradora, te asesoro en cada paso y me aseguro de que recibas la mejor atención y cobertura según tu póliza.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
