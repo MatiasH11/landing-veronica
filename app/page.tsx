@@ -114,29 +114,34 @@ export default function VeronicaSegurosLanding() {
 
   const services = [
     {
+      icon: <Shield className="w-6 h-6 text-primary" />,
+      title: "ART con reducción de alícuotas",
+      description: "Cobertura de riesgos del trabajo con beneficios en alícuotas para PyMEs.",
+    },
+    {
       icon: <Home className="w-6 h-6 text-primary" />,
-      title: "Seguro de Hogar",
-      description: "Protegé tu casa y todo lo que hay en ella con coberturas integrales.",
-    },
-    {
-      icon: <Car className="w-6 h-6 text-primary" />,
-      title: "Seguro de Auto",
-      description: "Circulá tranquilo con la mejor cobertura para tu vehículo.",
-    },
-    {
-      icon: <Heart className="w-6 h-6 text-primary" />,
-      title: "Seguro de Vida",
-      description: "Asegurá el futuro de tu familia con planes adaptados.",
+      title: "Seguro integral de comercio",
+      description: "Protección completa para tu local, mercadería y equipamiento comercial.",
     },
     {
       icon: <Shield className="w-6 h-6 text-primary" />,
-      title: "Seguro de Salud",
-      description: "Cuidá tu bienestar con coberturas médicas de calidad.",
+      title: "Responsabilidad civil",
+      description: "Cobertura ante reclamos de terceros por daños en tu actividad profesional.",
+    },
+    {
+      icon: <Car className="w-6 h-6 text-primary" />,
+      title: "Seguro técnico / maquinaria",
+      description: "Protección especializada para equipos y maquinaria de tu empresa.",
+    },
+    {
+      icon: <Heart className="w-6 h-6 text-primary" />,
+      title: "Obra social para monotributistas",
+      description: "Acceso a cobertura médica para trabajadores independientes.",
     },
     {
       icon: <Plane className="w-6 h-6 text-primary" />,
-      title: "Seguro de Viaje",
-      description: "Viajá sin preocupaciones con asistencia integral.",
+      title: "Seguro de vida obligatorio",
+      description: "Cobertura de vida requerida para empleados en relación de dependencia.",
     },
   ]
 
@@ -184,10 +189,23 @@ export default function VeronicaSegurosLanding() {
     alert("¡Gracias por tu consulta! Te contactaremos pronto.")
   }
 
+  const openWhatsApp = () => {
+    const phoneNumber = "5492235000000" // Reemplazar con el número real
+    const message = "Hola Verónica, me interesa conocer más sobre tus servicios de seguros empresariales."
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
+  }
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId)
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" })
+      const navbarHeight = 80 // Altura del navbar fijo
+      const elementPosition = element.offsetTop - navbarHeight
+      
+      window.scrollTo({
+        top: elementPosition,
+        behavior: "smooth"
+      })
     }
     setIsMenuOpen(false)
   }
@@ -302,10 +320,13 @@ export default function VeronicaSegurosLanding() {
               >
                 Contacto
               </button>
-              <Button className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-2 rounded-full">
-                <MessageCircle className="w-4 h-4 mr-2" />
-                WhatsApp
-              </Button>
+                             <Button 
+                 onClick={openWhatsApp}
+                 className="bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-2 rounded-full"
+               >
+                 <MessageCircle className="w-4 h-4 mr-2" />
+                 WhatsApp
+               </Button>
               {mounted && (
                 <button
                   onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
@@ -374,10 +395,13 @@ export default function VeronicaSegurosLanding() {
                 >
                   Contacto
                 </button>
-                <Button className="w-full mt-4 bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-2 rounded-full">
-                  <MessageCircle className="w-4 h-4 mr-2" />
-                  WhatsApp
-                </Button>
+                                 <Button 
+                   onClick={openWhatsApp}
+                   className="w-full mt-4 bg-primary hover:bg-primary/80 text-primary-foreground px-6 py-2 rounded-full"
+                 >
+                   <MessageCircle className="w-4 h-4 mr-2" />
+                   WhatsApp
+                 </Button>
               </div>
             </div>
           )}
@@ -385,7 +409,7 @@ export default function VeronicaSegurosLanding() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section id="inicio" className="relative h-screen flex items-center justify-center overflow-hidden">
         <div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -398,24 +422,24 @@ export default function VeronicaSegurosLanding() {
         <div className="absolute inset-0 bg-black/60" /> {/* Overlay más oscuro */}
         <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight text-white">
-            Protegé lo que más te importa
+            Protegé tu empresa y tu futuro profesional
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto">
-            Asesoramiento integral en seguros para que vivas tranquilo, sabiendo que tu familia y bienes están protegidos.
+            Asesoramiento profesional en seguros para empresas, emprendimientos y trabajadores independientes. Análisis gratuito de tu perfil de riesgo.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               onClick={() => scrollToSection("contacto")}
               className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-6 text-lg rounded-full border-2 border-primary"
             >
-              Consulta Gratuita
+              Análisis Gratuito
             </Button>
             <Button
               variant="outline"
               onClick={() => scrollToSection("servicios")}
               className="bg-transparent text-white border-2 border-white hover:bg-white/10 px-8 py-6 text-lg rounded-full"
             >
-              Conocé nuestros servicios
+              Ver Coberturas Empresariales
             </Button>
           </div>
         </div>
@@ -459,15 +483,25 @@ export default function VeronicaSegurosLanding() {
       </section>
 
       {/* Services Section */}
-      <section ref={servicesRef} className="services-section py-20 px-4">
+      <section id="servicios" ref={servicesRef} className="services-section py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Nuestros Seguros
+              ¿Qué seguros comercializo para tu empresa o actividad?
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto px-6">
-              Elegí el tipo de seguro que mejor se adapte a tus necesidades. Todos con asesoramiento personalizado y atención humana.
+              Seguros especializados para PyMEs, emprendimientos y trabajadores independientes, con productos de compañías líderes del mercado.
             </p>
+            <div className="flex justify-center gap-8 mt-8">
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-foreground mb-2">PyME / EMPRESA</h3>
+                <div className="w-20 h-1 bg-primary mx-auto"></div>
+              </div>
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-foreground mb-2">EMPLEADOS / INDIVIDUAL</h3>
+                <div className="w-20 h-1 bg-primary mx-auto"></div>
+              </div>
+            </div>
           </div>
           <div className="relative px-12">
             {/* Fade izquierdo */}
@@ -498,11 +532,12 @@ export default function VeronicaSegurosLanding() {
                     title={service.title}
                     description={service.description}
                     secondaryText={
-                      index === 0 ? 'Desde $5.000/mes' :
-                      index === 1 ? 'Desde $7.000/mes' :
-                      index === 2 ? 'Desde $3.000/mes' :
-                      index === 3 ? 'Desde $4.000/mes' :
-                      index === 4 ? 'Desde $2.500/mes' : undefined
+                      index === 0 ? 'Consultar cotización' :
+                      index === 1 ? 'Desde $10.000/mes' :
+                      index === 2 ? 'Desde $8.000/mes' :
+                      index === 3 ? 'Consultar cotización' :
+                      index === 4 ? 'Desde $3.500/mes' :
+                      index === 5 ? 'Desde $2.000/mes' : undefined
                     }
                   />
                 </div>
@@ -540,14 +575,14 @@ export default function VeronicaSegurosLanding() {
       </section>
 
       {/* Process Section */}
-      <section ref={processRef} className="py-20 px-4">
+      <section id="proceso" ref={processRef} className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Cómo funciona
+              Cómo trabajo
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Nuestro proceso es simple y transparente. Te acompañamos en cada paso.
+              Mi proceso es simple, personalizado y sin compromiso. Te acompaño desde el análisis hasta la implementación.
             </p>
           </div>
 
@@ -556,17 +591,17 @@ export default function VeronicaSegurosLanding() {
               <div className="relative w-full h-[200px] mb-4">
                 <img
                   src="/images/step-1.svg"
-                  alt="Consulta Gratuita"
+                  alt="Análisis de Riesgo"
                   className="w-full h-full"
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Consulta Gratuita</h3>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Análisis Gratuito de Riesgo</h3>
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
                 1
               </div>
               <p className="text-muted-foreground max-w-xs text-sm">
-                Contactanos y contanos qué necesitás proteger. Te escuchamos y entendemos tus necesidades.
+                Analizamos tu actividad empresarial o independiente para identificar riesgos específicos y evaluar tus coberturas actuales.
               </p>
             </div>
 
@@ -579,12 +614,12 @@ export default function VeronicaSegurosLanding() {
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Cotización Personalizada</h3>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Propuesta Personalizada</h3>
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
                 2
               </div>
               <p className="text-muted-foreground max-w-xs text-sm">
-                Analizamos las mejores opciones del mercado y te presentamos las alternativas más convenientes.
+                Te presento las mejores opciones del mercado adaptadas a tu perfil empresarial, con atención online y personalizada.
               </p>
             </div>
 
@@ -592,17 +627,17 @@ export default function VeronicaSegurosLanding() {
               <div className="relative w-full h-[200px] mb-4">
                 <img
                   src="/images/step-3.svg"
-                  alt="Acompañamiento Continuo"
+                  alt="Implementación y Seguimiento"
                   className="w-full h-full"
                   style={{ objectFit: 'contain' }}
                 />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-foreground">Acompañamiento Continuo</h3>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Implementación y Seguimiento</h3>
               <div className="bg-primary text-primary-foreground rounded-full w-12 h-12 flex items-center justify-center text-xl font-bold mx-auto my-4">
                 3
               </div>
               <p className="text-muted-foreground max-w-xs text-sm">
-                Te acompañamos durante todo el proceso y después de la contratación. Siempre estamos disponibles.
+                Sin compromiso de contratación. Si decidís avanzar, te acompaño en la implementación y seguimiento continuo.
               </p>
             </div>
           </div>
@@ -610,7 +645,7 @@ export default function VeronicaSegurosLanding() {
       </section>
 
       {/* Testimonials Section */}
-      <section ref={testimonialsRef} className="testimonials-section py-20 px-4">
+      <section id="testimonios" ref={testimonialsRef} className="testimonials-section py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -749,7 +784,7 @@ export default function VeronicaSegurosLanding() {
             <div className="space-y-6">
               <div className="inline-block bg-primary/10 px-4 py-2 rounded-full">
                 <span className="text-primary text-sm font-medium">
-                  Productora Asesora de Seguros Matriculada
+                  Productora Asesora de Seguros - Mat 101463
                 </span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground">
@@ -757,13 +792,29 @@ export default function VeronicaSegurosLanding() {
               </h2>
               <div className="space-y-6">
                 <p className="text-xl text-foreground/80">
-                  Soy Verónica Mercado, aseguradora con más de 15 años de experiencia. Mi objetivo es brindarte tranquilidad y seguridad,
-                  ayudándote a proteger lo que más te importa.
+                  "Soy Verónica Mercado, PAS matriculada. Acompaño a PyMEs, emprendimientos y comercios a proteger lo que construyeron con esfuerzo, ofreciendo asesoramiento integral y acceso a productos aseguradores de primer nivel."
                 </p>
                 <p className="text-xl text-foreground/80">
-                  Con un equipo altamente capacitado y dedicado, te ofrezco asesoramiento personalizado y atención inmediata.
-                  Mi compromiso es encontrar la mejor solución para tus necesidades de seguros.
+                  Con más de 15 años de experiencia, trabajo con atención 100% personalizada, online y flexible, manteniendo un trato directo y humano respaldado por compañías líderes del mercado.
                 </p>
+              </div>
+              <div className="grid grid-cols-2 gap-4 mt-8">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm text-foreground/80">Asesoramiento 100% personalizado</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm text-foreground/80">Atención online y flexible</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm text-foreground/80">Trato directo y humano</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  <span className="text-sm text-foreground/80">Respaldo de compañías líderes</span>
+                </div>
               </div>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Button 
@@ -786,12 +837,12 @@ export default function VeronicaSegurosLanding() {
       </section>
 
       {/* Sección de Contacto */}
-      <section ref={contactRef} className="py-20 px-4">
+      <section id="contacto" ref={contactRef} className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">¿Necesitás asesoramiento?</h2>
+            <h2 className="text-4xl font-bold text-foreground mb-4">¿Necesitás un análisis de riesgo?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Completá el formulario y me pondré en contacto con vos para brindarte la mejor solución para tus necesidades.
+              Con cada consulta, realizo un análisis gratuito del perfil de riesgo de tu actividad, para que sepas si estás bien cubierto o necesitás ajustar tus coberturas.
             </p>
           </div>
 
@@ -799,6 +850,44 @@ export default function VeronicaSegurosLanding() {
             <div className="bg-card p-8 rounded-2xl shadow-lg border border-border">
               <ContactForm />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Credenciales y Respaldo */}
+      <section className="py-16 bg-secondary/50">
+        <div className="container mx-auto px-4">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-foreground mb-8">
+              Respaldo Profesional
+            </h2>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+              <div className="text-center">
+                <div className="bg-card p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
+                    Productora Asesora de Seguros
+                  </h3>
+                  <p className="text-primary font-bold text-lg">Mat 101463</p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Matriculada por la Superintendencia de Seguros de la Nación
+                  </p>
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="bg-card p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
+                    Compañías Líderes
+                  </h3>
+                  <p className="text-primary font-bold text-lg">Primer Nivel</p>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    Acceso a productos de las mejores aseguradoras del país
+                  </p>
+                </div>
+              </div>
+            </div>
+            <p className="text-center text-muted-foreground mt-8 max-w-2xl mx-auto">
+              Sin compromiso de contratación. Mi objetivo es que tomes decisiones informadas, con respaldo y tranquilidad.
+            </p>
           </div>
         </div>
       </section>
