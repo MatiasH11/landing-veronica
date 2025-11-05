@@ -31,7 +31,7 @@ const stats = [
 
 export function AboutMe() {
   return (
-    <section className="relative py-24 px-4 overflow-hidden">
+    <section id="sobre-mi" className="relative py-24 px-4 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
 

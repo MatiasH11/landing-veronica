@@ -78,7 +78,7 @@ export function ContactForm() {
   }
 
   return (
-    <section className="relative py-20 px-4 overflow-hidden">
+    <section id="contacto" className="relative py-20 px-4 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
 

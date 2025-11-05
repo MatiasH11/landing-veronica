@@ -36,7 +36,7 @@ const steps: Step[] = [
 
 export function HowIWork() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-[#1a1d2e] via-[#0f1419] to-[#1a1d2e] py-20 px-4 overflow-hidden">
+    <section id="como-funciona" className="relative min-h-screen bg-gradient-to-br from-[#1a1d2e] via-[#0f1419] to-[#1a1d2e] py-20 px-4 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
         <div className="absolute top-40 right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl" />

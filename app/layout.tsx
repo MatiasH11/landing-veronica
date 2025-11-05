@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Outfit } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { Navbar } from "@/components/navbar"
 import "./globals.css"
 
 const inter = Inter({
@@ -30,6 +31,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${outfit.variable}`}>
       <body className="font-sans antialiased">
+        <Navbar />
         {children}
         <Analytics />
       </body>

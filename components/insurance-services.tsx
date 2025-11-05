@@ -88,7 +88,7 @@ export function InsuranceServices() {
   const currentInsuranceData = useMemo(() => insuranceData[activeType], [activeType])
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-[#0f1419] via-[#1a1d2e] to-[#0f1419] py-20 px-4 overflow-hidden">
+    <section id="servicios" className="relative min-h-screen bg-gradient-to-br from-[#0f1419] via-[#1a1d2e] to-[#0f1419] py-20 px-4 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-30" aria-hidden="true">
         <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl" />

@@ -11,7 +11,7 @@ const benefits = [
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img src="/business-handshake-trust-professional-insurance-ag.jpg" alt="Protección y confianza" className="w-full h-full object-cover" />
         {/* Dark overlay for text readability */}

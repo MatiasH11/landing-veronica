@@ -107,7 +107,7 @@ const secondRow = testimonials.slice(6, 12)
 
 export function Testimonials() {
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section id="testimonios" className="relative py-24 overflow-hidden">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900" />
 
