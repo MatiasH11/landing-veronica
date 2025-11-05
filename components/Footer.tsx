@@ -1,106 +1,86 @@
-import { FaPhone, FaEnvelope, FaWhatsapp, FaFacebook, FaInstagram } from 'react-icons/fa'
-import Link from 'next/link'
+import { Phone, Mail, MessageCircle, Facebook, Instagram } from "lucide-react"
+import Link from "next/link"
 
-export default function Footer() {
+export function Footer() {
   return (
-    <footer className="bg-background border-t border-border">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Logo y descripción */}
-          <div className="col-span-1 md:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="text-[#FFC300] text-2xl font-bold">Verónica Mercado</div>
-            </Link>
-            <p className="text-muted-foreground mb-6">
+    <footer className="bg-slate-900 border-t border-slate-800">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="grid md:grid-cols-3 gap-12 mb-8">
+          {/* Brand Section */}
+          <div>
+            <h3 className="text-2xl font-bold text-yellow-500 mb-4">Verónica Mercado</h3>
+            <p className="text-slate-400 leading-relaxed">
               Brindamos asesoramiento personalizado en seguros para proteger lo que más te importa.
             </p>
           </div>
 
-          {/* Links útiles */}
+          {/* Quick Links */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Enlaces Rápidos</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link href="/#inicio" className="text-muted-foreground hover:text-[#FFC300] transition-colors">
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link href="/#servicios" className="text-muted-foreground hover:text-[#FFC300] transition-colors">
-                  Servicios
-                </Link>
-              </li>
-              <li>
-                <Link href="/#como-funciona" className="text-muted-foreground hover:text-[#FFC300] transition-colors">
-                  Cómo Funciona
-                </Link>
-              </li>
-              <li>
-                <Link href="/#testimonios" className="text-muted-foreground hover:text-[#FFC300] transition-colors">
-                  Testimonios
-                </Link>
-              </li>
-              <li>
-                <Link href="/#contacto" className="text-muted-foreground hover:text-[#FFC300] transition-colors">
-                  Contacto
-                </Link>
-              </li>
-            </ul>
+            <h4 className="text-lg font-semibold text-white mb-4">Enlaces Rápidos</h4>
+            <nav className="flex flex-col gap-3">
+              <Link href="#inicio" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                Inicio
+              </Link>
+              <Link href="#servicios" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                Servicios
+              </Link>
+              <Link href="#como-funciona" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                Cómo Funciona
+              </Link>
+              <Link href="#testimonios" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                Testimonios
+              </Link>
+              <Link href="#contacto" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                Contacto
+              </Link>
+            </nav>
           </div>
 
-          {/* Información de contacto */}
+          {/* Contact Info */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Contacto</h3>
-            <div className="space-y-3">
-              <a 
-                href="tel:+123456789"
-                className="flex items-center space-x-3 text-muted-foreground hover:text-[#FFC300] transition-colors"
+            <h4 className="text-lg font-semibold text-white mb-4">Contacto</h4>
+            <div className="flex flex-col gap-4">
+              <a
+                href="tel:+541234567890"
+                className="flex items-center gap-3 text-slate-400 hover:text-yellow-500 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                  <FaPhone className="w-4 h-4" />
-                </div>
+                <Phone className="w-5 h-5" />
                 <span>+54 123 456 789</span>
               </a>
-              <a 
+              <a
                 href="mailto:info@example.com"
-                className="flex items-center space-x-3 text-muted-foreground hover:text-[#FFC300] transition-colors"
+                className="flex items-center gap-3 text-slate-400 hover:text-yellow-500 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                  <FaEnvelope className="w-4 h-4" />
-                </div>
+                <Mail className="w-5 h-5" />
                 <span>info@example.com</span>
               </a>
-              <a 
-                href="https://wa.me/123456789"
+              <a
+                href="https://wa.me/541234567890"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 text-muted-foreground hover:text-[#FFC300] transition-colors"
+                className="flex items-center gap-3 text-slate-400 hover:text-yellow-500 transition-colors"
               >
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                  <FaWhatsapp className="w-4 h-4" />
-                </div>
+                <MessageCircle className="w-5 h-5" />
                 <span>WhatsApp</span>
               </a>
-            </div>
-
-            {/* Redes sociales */}
-            <div className="mt-6">
-              <div className="flex space-x-4">
-                <a 
+              <div className="flex gap-4 mt-2">
+                <a
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-[#FFC300] hover:bg-muted/80 transition-all duration-200"
+                  className="p-2 bg-slate-800 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all"
+                  aria-label="Facebook"
                 >
-                  <FaFacebook className="w-4 h-4" />
+                  <Facebook className="w-5 h-5" />
                 </a>
-                <a 
+                <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:text-[#FFC300] hover:bg-muted/80 transition-all duration-200"
+                  className="p-2 bg-slate-800 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all"
+                  aria-label="Instagram"
                 >
-                  <FaInstagram className="w-4 h-4" />
+                  <Instagram className="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -108,10 +88,12 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-border mt-12 pt-8 text-center text-muted-foreground text-sm">
-          <p>&copy; {new Date().getFullYear()} Verónica Mercado Seguros. Todos los derechos reservados.</p>
+        <div className="pt-8 border-t border-slate-800">
+          <p className="text-center text-slate-500 text-sm">
+            © 2025 Verónica Mercado Seguros. Todos los derechos reservados.
+          </p>
         </div>
       </div>
     </footer>
   )
-} 
+}
