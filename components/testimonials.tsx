@@ -181,7 +181,9 @@ export function Testimonials() {
         >
           <p className="text-slate-300 text-lg mb-6">¿Querés ser parte de estas historias de éxito?</p>
           <a
-            href="#contacto"
+            href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-semibold rounded-lg transition-colors duration-300"
           >
             Comenzar ahora

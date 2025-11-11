@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Menu, X, Phone, MessageCircle } from "lucide-react"
+import { motion } from "framer-motion"
+import { Menu, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
@@ -84,7 +84,7 @@ export function Navbar() {
               <span className="text-xl md:text-2xl font-bold text-yellow-500 font-heading leading-tight">
                 Verónica Mercado
               </span>
-              <span className="text-xs text-slate-400 tracking-wide">Seguros</span>
+              <span className="text-xs text-slate-400 tracking-wide">Asesora de Seguros</span>
             </div>
           </motion.a>
 
@@ -114,22 +114,11 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Button
               size="sm"
-              variant="ghost"
-              className="text-slate-300 hover:text-yellow-500 hover:bg-slate-800"
-              asChild
-            >
-              <a href="tel:+541234567890" className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                <span className="hidden lg:inline">Llamar</span>
-              </a>
-            </Button>
-            <Button
-              size="sm"
               className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
               asChild
             >
               <a
-                href="https://wa.me/541234567890"
+                href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2"
@@ -162,7 +151,7 @@ export function Navbar() {
                   <h2 className="text-2xl font-bold text-yellow-500 font-heading">
                     Verónica Mercado
                   </h2>
-                  <p className="text-sm text-slate-400 mt-1">Seguros</p>
+                  <p className="text-sm text-slate-400 mt-1">Asesora de Seguros</p>
                 </div>
 
                 {/* Mobile Nav Items */}
@@ -191,31 +180,20 @@ export function Navbar() {
                 </nav>
 
                 {/* Mobile CTA */}
-                <div className="p-4 border-t border-slate-800 space-y-3">
+                <div className="p-4 border-t border-slate-800">
                   <Button
                     size="lg"
                     className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
                     asChild
                   >
                     <a
-                      href="https://wa.me/541234567890"
+                      href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2"
                     >
                       <MessageCircle className="w-5 h-5" />
                       Cotizá ahora
-                    </a>
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full border-slate-700 text-slate-300 hover:bg-slate-800"
-                    asChild
-                  >
-                    <a href="tel:+541234567890" className="flex items-center justify-center gap-2">
-                      <Phone className="w-5 h-5" />
-                      Llamar ahora
                     </a>
                   </Button>
                 </div>

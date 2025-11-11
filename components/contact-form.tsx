@@ -4,8 +4,9 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Send, CheckCircle2 } from "lucide-react"
+import { Send, CheckCircle2, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import emailjs from "@emailjs/browser"
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export function ContactForm() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+  const [isError, setIsError] = useState(false)
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -56,16 +58,43 @@ export function ContactForm() {
     if (!validateForm()) return
 
     setIsSubmitting(true)
+    setIsError(false)
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      // Preparar los datos del template para EmailJS
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        insurance_type: formData.insuranceType,
+        message: formData.message,
+        to_email: "veronicamercadoseguros@gmail.com",
+      }
 
-    setIsSubmitting(false)
-    setIsSuccess(true)
-    setFormData({ name: "", phone: "", email: "", insuranceType: "", message: "" })
+      // Enviar email usando EmailJS
+      const response = await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ""
+      )
 
-    // Reset success message after 5 seconds
-    setTimeout(() => setIsSuccess(false), 5000)
+      console.log("Email enviado exitosamente:", response.status, response.text)
+
+      setIsSubmitting(false)
+      setIsSuccess(true)
+      setFormData({ name: "", phone: "", email: "", insuranceType: "", message: "" })
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setIsSuccess(false), 5000)
+    } catch (error) {
+      console.error("Error al enviar email:", error)
+      setIsSubmitting(false)
+      setIsError(true)
+
+      // Reset error message after 5 seconds
+      setTimeout(() => setIsError(false), 5000)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -122,6 +151,33 @@ export function ContactForm() {
                   </motion.div>
                   <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje enviado!</h3>
                   <p className="text-slate-300">Te responderé a la brevedad.</p>
+                </div>
+              </motion.div>
+            )}
+
+            {/* Error message */}
+            {isError && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="absolute inset-0 bg-slate-900/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
+              >
+                <div className="text-center px-6">
+                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
+                    <AlertCircle className="w-20 h-20 text-red-500 mx-auto mb-4" />
+                  </motion.div>
+                  <h3 className="text-2xl font-bold text-white mb-2">Error al enviar</h3>
+                  <p className="text-slate-300 mb-4">
+                    Hubo un problema al enviar tu mensaje. Por favor, intentá nuevamente o contactame por WhatsApp.
+                  </p>
+                  <a
+                    href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold rounded-lg transition-colors"
+                  >
+                    Ir a WhatsApp
+                  </a>
                 </div>
               </motion.div>
             )}

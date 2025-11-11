@@ -126,7 +126,12 @@ export function HowIWork() {
           className="mt-16 text-center"
         >
           <p className="text-gray-400 text-lg mb-6">¿Listo para proteger lo que más importa?</p>
-          <button className="group inline-flex items-center gap-3 px-8 py-4 bg-gold text-[#0f1419] font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/30 hover:scale-105">
+          <a
+            href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-gold text-[#0f1419] font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/30 hover:scale-105"
+          >
             <span>Comenzar ahora</span>
             <svg
               className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
@@ -137,7 +142,7 @@ export function HowIWork() {
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
-          </button>
+          </a>
         </motion.div>
       </div>
     </section>

@@ -1,4 +1,4 @@
-import { Phone, Mail, MessageCircle, Facebook, Instagram } from "lucide-react"
+import { Phone, Mail, MessageCircle, Facebook, Instagram, Linkedin } from "lucide-react"
 import Link from "next/link"
 
 export function Footer() {
@@ -48,14 +48,14 @@ export function Footer() {
                 <span>+54 123 456 789</span>
               </a>
               <a
-                href="mailto:info@example.com"
+                href="mailto:veronicamercadoseguros@gmail.com"
                 className="flex items-center gap-3 text-slate-400 hover:text-yellow-500 transition-colors"
               >
                 <Mail className="w-5 h-5" />
-                <span>info@example.com</span>
+                <span>veronicamercadoseguros@gmail.com</span>
               </a>
               <a
-                href="https://wa.me/541234567890"
+                href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-slate-400 hover:text-yellow-500 transition-colors"
@@ -65,7 +65,7 @@ export function Footer() {
               </a>
               <div className="flex gap-4 mt-2">
                 <a
-                  href="https://facebook.com"
+                  href="https://www.facebook.com/profile.php?id=100090866004202&mibextid=ZbWKwL"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-slate-800 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all"
@@ -74,13 +74,22 @@ export function Footer() {
                   <Facebook className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/veronicamasesor"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-slate-800 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all"
                   aria-label="Instagram"
                 >
                   <Instagram className="w-5 h-5" />
+                </a>
+                <a
+                  href="http://www.linkedin.com/in/veronica-mercado-4b8b96319"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2 bg-slate-800 rounded-full hover:bg-yellow-500/10 hover:text-yellow-500 transition-all"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
                 </a>
               </div>
             </div>

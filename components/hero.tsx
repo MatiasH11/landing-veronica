@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { MessageCircle } from "lucide-react"
 
 const benefits = [
   "Asesoramiento 100% personalizado",
@@ -45,15 +46,27 @@ export function Hero() {
             <Button
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold px-8 py-6 text-base"
+              asChild
             >
-              Cotizá ahora
+              <a
+                href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <MessageCircle className="w-5 h-5" />
+                Cotizá ahora
+              </a>
             </Button>
             <Button
               size="lg"
               variant="outline"
               className="border-slate-400 hover:border-yellow-500 hover:bg-yellow-500/10 text-white px-8 py-6 text-base bg-transparent"
+              asChild
             >
-              Ver Coberturas
+              <a href="#servicios">
+                Ver Coberturas
+              </a>
             </Button>
           </motion.div>
         </motion.div>

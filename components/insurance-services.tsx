@@ -247,12 +247,20 @@ function MoreInsuranceCard({ index }: { index: number }) {
           variant="outline"
           className="w-full border-gold/30 text-gold hover:bg-gold hover:text-[#0f1419] hover:border-gold transition-all duration-300 bg-transparent group/btn"
           aria-label="Contactar para más seguros"
+          asChild
         >
-          <span>Contáctanos</span>
-          <ArrowRight
-            className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1"
-            aria-hidden="true"
-          />
+          <a
+            href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center"
+          >
+            <span>Contáctanos</span>
+            <ArrowRight
+              className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
         </Button>
       </div>
     </motion.article>
