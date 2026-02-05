@@ -204,12 +204,15 @@ function InsuranceCard({ card, index }: { card: InsuranceCard; index: number }) 
           variant="outline"
           className="w-full border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 bg-transparent group/btn"
           aria-label={`Más información sobre ${card.title}`}
+          asChild
         >
-          <span>Más información</span>
-          <ArrowRight
-            className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1"
-            aria-hidden="true"
-          />
+          <a href="#contacto">
+            <span>Más información</span>
+            <ArrowRight
+              className="w-4 h-4 ml-2 transition-transform duration-300 group-hover/btn:translate-x-1"
+              aria-hidden="true"
+            />
+          </a>
         </Button>
       </div>
     </motion.article>

@@ -55,7 +55,7 @@ export function AboutMe() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--light-pink)] border border-primary/20"
             >
               <Shield className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Productora Asesora de Seguros - Mat 101463</span>
