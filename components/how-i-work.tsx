@@ -36,11 +36,11 @@ const steps: Step[] = [
 
 export function HowIWork() {
   return (
-    <section id="como-funciona" className="relative min-h-screen bg-gradient-to-br from-[#1a1d2e] via-[#0f1419] to-[#1a1d2e] py-20 px-4 overflow-hidden">
+    <section id="como-funciona" className="relative min-h-screen bg-muted py-20 px-4 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-20" aria-hidden="true">
-        <div className="absolute top-40 right-20 w-96 h-96 bg-gold/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-40 left-20 w-72 h-72 bg-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-40 right-20 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-40 left-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto">
@@ -51,10 +51,10 @@ export function HowIWork() {
           transition={{ duration: 0.6 }}
           className="text-center mb-20"
         >
-          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-balance tracking-tight">
+          <h2 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 text-balance tracking-tight">
             Cómo trabajo
           </h2>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto text-pretty leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
             Mi proceso es simple, personalizado y sin compromiso. Te acompaño desde el análisis hasta la implementación.
           </p>
         </motion.header>
@@ -73,16 +73,16 @@ export function HowIWork() {
               {/* Connecting line (hidden on mobile, shown on desktop between cards) */}
               {index < steps.length - 1 && (
                 <div
-                  className="hidden md:block absolute top-32 left-full w-full h-0.5 bg-gradient-to-r from-gold/40 via-gold/20 to-transparent -z-10"
+                  className="hidden md:block absolute top-32 left-full w-full h-0.5 bg-gradient-to-r from-primary/40 via-primary/20 to-transparent -z-10"
                   aria-hidden="true"
                 />
               )}
 
-              <div className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-8 transition-all duration-500 hover:border-gold/40 hover:shadow-2xl hover:shadow-gold/10 hover:-translate-y-2">
+              <div className="relative bg-card/50 backdrop-blur-md border border-border rounded-2xl p-8 transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2">
                 {/* Step Number Badge */}
                 <div className="absolute -top-5 left-8">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-gold to-gold/80 shadow-lg shadow-gold/30 border-4 border-[#1a1d2e] transition-transform duration-300 group-hover:scale-110">
-                    <span className="font-heading text-xl font-bold text-[#0f1419]">{step.number}</span>
+                  <div className="flex items-center justify-center w-12 h-12 rounded-full bg-[var(--light-pink)] shadow-lg shadow-primary/10 border-4 border-background transition-transform duration-300 group-hover:scale-110">
+                    <span className="font-heading text-xl font-bold text-primary">{step.number}</span>
                   </div>
                 </div>
 
@@ -101,15 +101,15 @@ export function HowIWork() {
 
                 {/* Content */}
                 <div className="text-center">
-                  <h3 className="font-heading text-2xl font-bold text-white mb-4 group-hover:text-gold transition-colors duration-300 text-balance">
+                  <h3 className="font-heading text-2xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors duration-300 text-balance">
                     {step.title}
                   </h3>
-                  <p className="text-gray-400 leading-relaxed text-pretty">{step.description}</p>
+                  <p className="text-muted-foreground leading-relaxed text-pretty">{step.description}</p>
                 </div>
 
                 {/* Decorative corner accent */}
                 <div
-                  className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-gold/5 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute bottom-0 right-0 w-20 h-20 bg-gradient-to-tl from-primary/5 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   aria-hidden="true"
                 />
               </div>
@@ -125,12 +125,12 @@ export function HowIWork() {
           transition={{ duration: 0.6, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <p className="text-gray-400 text-lg mb-6">¿Listo para proteger lo que más importa?</p>
+          <p className="text-muted-foreground text-lg mb-6">¿Listo para proteger lo que más importa?</p>
           <a
             href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-3 px-8 py-4 bg-gold text-[#0f1419] font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-gold/30 hover:scale-105"
+            className="group inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground font-semibold rounded-full transition-all duration-300 hover:shadow-xl hover:shadow-primary/30 hover:scale-105"
           >
             <span>Comenzar ahora</span>
             <svg

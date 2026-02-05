@@ -15,8 +15,8 @@ export function Hero() {
     <section id="inicio" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
         <img src="/business-handshake-trust-professional-insurance-ag.jpg" alt="Protección y confianza" className="w-full h-full object-cover" />
-        {/* Dark overlay for text readability */}
-        <div className="absolute inset-0 bg-slate-950/70" />
+        {/* Burgundy overlay matching brand colors */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-primary/50" />
       </div>
 
       <div className="container relative z-10 px-4">
@@ -32,7 +32,7 @@ export function Hero() {
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl text-slate-200 leading-relaxed text-pretty max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/90 leading-relaxed text-pretty max-w-2xl mx-auto">
             Asesoramiento personalizado en seguros para personas y PyMEs. 100% online, rápido y seguro.
           </p>
 
@@ -45,7 +45,7 @@ export function Hero() {
           >
             <Button
               size="lg"
-              className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold px-8 py-6 text-base"
+              className="font-semibold px-8 py-6 text-base"
               asChild
             >
               <a
@@ -60,8 +60,8 @@ export function Hero() {
             </Button>
             <Button
               size="lg"
-              variant="outline"
-              className="border-slate-400 hover:border-yellow-500 hover:bg-yellow-500/10 text-white px-8 py-6 text-base bg-transparent"
+              variant="secondary"
+              className="px-8 py-6 text-base"
               asChild
             >
               <a href="#servicios">
@@ -78,10 +78,10 @@ export function Hero() {
         transition={{ duration: 0.8, delay: 0.4 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2"
       >
-        <div className="w-2 h-2 rounded-full bg-yellow-500" />
-        <div className="w-2 h-2 rounded-full bg-slate-500" />
-        <div className="w-2 h-2 rounded-full bg-slate-500" />
-        <div className="w-2 h-2 rounded-full bg-slate-500" />
+        <div className="w-2 h-2 rounded-full bg-primary" />
+        <div className="w-2 h-2 rounded-full bg-foreground/20" />
+        <div className="w-2 h-2 rounded-full bg-foreground/20" />
+        <div className="w-2 h-2 rounded-full bg-foreground/20" />
       </motion.div>
     </section>
   )

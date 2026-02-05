@@ -88,11 +88,11 @@ export function InsuranceServices() {
   const currentInsuranceData = useMemo(() => insuranceData[activeType], [activeType])
 
   return (
-    <section id="servicios" className="relative min-h-screen bg-gradient-to-br from-[#0f1419] via-[#1a1d2e] to-[#0f1419] py-20 px-4 overflow-hidden">
+    <section id="servicios" className="relative min-h-screen bg-background py-20 px-4 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 opacity-30" aria-hidden="true">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-gold/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto">
@@ -103,10 +103,10 @@ export function InsuranceServices() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 text-balance tracking-tight">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 text-balance tracking-tight">
             Seguros para cada necesidad
           </h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto text-pretty leading-relaxed">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
             Explora nuestras coberturas y encuentra la protección perfecta para ti o para tu empresa.
           </p>
         </motion.header>
@@ -120,7 +120,7 @@ export function InsuranceServices() {
           role="tablist"
           aria-label="Tipo de seguro"
         >
-          <div className="inline-flex items-center gap-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full p-1.5">
+          <div className="inline-flex items-center gap-2 bg-card/5 backdrop-blur-sm border border-border rounded-full p-1.5">
             <button
               onClick={() => setActiveType("personas")}
               role="tab"
@@ -129,8 +129,8 @@ export function InsuranceServices() {
               className={cn(
                 "px-8 py-3 rounded-full font-medium transition-all duration-300",
                 activeType === "personas"
-                  ? "bg-gold text-[#0f1419] shadow-lg shadow-gold/25"
-                  : "text-gray-400 hover:text-white",
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Para Personas
@@ -143,8 +143,8 @@ export function InsuranceServices() {
               className={cn(
                 "px-8 py-3 rounded-full font-medium transition-all duration-300",
                 activeType === "empresas"
-                  ? "bg-gold text-[#0f1419] shadow-lg shadow-gold/25"
-                  : "text-gray-400 hover:text-white",
+                  ? "bg-primary text-primary-foreground shadow-lg shadow-primary/25"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Para Empresas
@@ -185,24 +185,24 @@ function InsuranceCard({ card, index }: { card: InsuranceCard; index: number }) 
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group relative"
     >
-      <div className="relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-md border border-white/10 rounded-2xl p-6 transition-all duration-300 hover:border-gold/40 hover:shadow-xl hover:shadow-gold/5 hover:-translate-y-1">
+      <div className="relative bg-card/50 backdrop-blur-md border border-border rounded-2xl p-6 transition-all duration-300 hover:border-primary/40 hover:shadow-xl hover:shadow-primary/5 hover:-translate-y-1">
         {/* Icon */}
         <div className="mb-5">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 transition-all duration-300 group-hover:bg-gold/20 group-hover:scale-105">
-            <Icon className="w-7 h-7 text-gold" strokeWidth={1.5} aria-hidden="true" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[var(--light-pink)] border border-primary/20 transition-all duration-300 group-hover:scale-105">
+            <Icon className="w-7 h-7 text-primary" strokeWidth={1.5} aria-hidden="true" />
           </div>
         </div>
 
         {/* Content */}
-        <h3 className="font-heading text-xl font-bold text-white mb-3 group-hover:text-gold transition-colors duration-300">
+        <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
           {card.title}
         </h3>
-        <p className="text-gray-400 text-sm leading-relaxed mb-6">{card.description}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-6">{card.description}</p>
 
         {/* Button */}
         <Button
           variant="outline"
-          className="w-full border-gold/30 text-gold hover:bg-gold hover:text-[#0f1419] hover:border-gold transition-all duration-300 bg-transparent group/btn"
+          className="w-full border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 bg-transparent group/btn"
           aria-label={`Más información sobre ${card.title}`}
         >
           <span>Más información</span>
@@ -224,20 +224,20 @@ function MoreInsuranceCard({ index }: { index: number }) {
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="group relative"
     >
-      <div className="relative bg-gradient-to-br from-gold/5 to-gold/[0.02] backdrop-blur-md border-2 border-dashed border-gold/30 rounded-2xl p-6 transition-all duration-300 hover:border-gold/60 hover:shadow-xl hover:shadow-gold/10 hover:-translate-y-1 h-full flex flex-col justify-between">
+      <div className="relative bg-card/50 backdrop-blur-md border-2 border-dashed border-primary/30 rounded-2xl p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 h-full flex flex-col justify-between">
         {/* Icon */}
         <div className="mb-5">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-gold/10 border border-gold/20 transition-all duration-300 group-hover:bg-gold/20 group-hover:scale-105">
-            <MessageCircle className="w-7 h-7 text-gold" strokeWidth={1.5} aria-hidden="true" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-[var(--light-pink)] border border-primary/20 transition-all duration-300 group-hover:scale-105">
+            <MessageCircle className="w-7 h-7 text-primary" strokeWidth={1.5} aria-hidden="true" />
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1">
-          <h3 className="font-heading text-xl font-bold text-white mb-3 group-hover:text-gold transition-colors duration-300">
+          <h3 className="font-heading text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors duration-300">
             ¿Buscas algo más?
           </h3>
-          <p className="text-gray-400 text-sm leading-relaxed mb-6">
+          <p className="text-muted-foreground text-sm leading-relaxed mb-6">
             Ofrecemos muchos más tipos de seguros personalizados. Contáctanos para encontrar la solución perfecta.
           </p>
         </div>
@@ -245,7 +245,7 @@ function MoreInsuranceCard({ index }: { index: number }) {
         {/* Button */}
         <Button
           variant="outline"
-          className="w-full border-gold/30 text-gold hover:bg-gold hover:text-[#0f1419] hover:border-gold transition-all duration-300 bg-transparent group/btn"
+          className="w-full border-primary/30 text-primary hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 bg-transparent group/btn"
           aria-label="Contactar para más seguros"
           asChild
         >

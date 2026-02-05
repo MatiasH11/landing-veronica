@@ -107,9 +107,9 @@ const secondRow = testimonials.slice(6, 12)
 
 export function Testimonials() {
   return (
-    <section id="testimonios" className="relative py-24 overflow-hidden">
+    <section id="testimonios" className="relative py-24 overflow-hidden bg-muted">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900" />
+      <div className="absolute inset-0 bg-muted" />
 
       <div className="relative">
         {/* Header */}
@@ -120,12 +120,14 @@ export function Testimonials() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 px-4"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Lo que dicen mis clientes</h2>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Lo que dicen mis clientes</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             La confianza de mis clientes es mi mayor logro. Lee sus experiencias y descubre por qué eligen mi
             asesoramiento.
           </p>
         </motion.div>
+
+        {/* ... (Existing slider structure is fine, just replacing child components' styles is enough if they inherit correctly, but I need to check the TestimonialCard styles too which are inside this file) */}
 
         <div className="relative mb-8 overflow-hidden">
           <motion.div
@@ -179,12 +181,12 @@ export function Testimonials() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="text-center mt-16 px-4"
         >
-          <p className="text-slate-300 text-lg mb-6">¿Querés ser parte de estas historias de éxito?</p>
+          <p className="text-muted-foreground text-lg mb-6">¿Querés ser parte de estas historias de éxito?</p>
           <a
             href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-slate-900 font-semibold rounded-lg transition-colors duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors duration-300"
           >
             Comenzar ahora
           </a>
@@ -197,34 +199,34 @@ export function Testimonials() {
 function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0] }) {
   return (
     <article className="flex-shrink-0 w-[380px] group">
-      <div className="relative h-full p-6 rounded-2xl bg-slate-800/40 backdrop-blur-sm border border-slate-700/50 hover:border-yellow-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-yellow-500/10">
+      <div className="relative h-full p-6 rounded-2xl bg-card/40 backdrop-blur-sm border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10">
         {/* Quote icon */}
         <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Quote className="w-12 h-12 text-yellow-500" />
+          <Quote className="w-12 h-12 text-primary" />
         </div>
 
         {/* Rating */}
         <div className="flex gap-1 mb-4">
           {[...Array(testimonial.rating)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+            <Star key={i} className="w-4 h-4 fill-primary text-primary" />
           ))}
         </div>
 
         {/* Testimonial text */}
-        <p className="text-slate-300 text-sm leading-relaxed mb-6 relative z-10">{testimonial.text}</p>
+        <p className="text-muted-foreground text-sm leading-relaxed mb-6 relative z-10">{testimonial.text}</p>
 
         {/* Author info */}
-        <div className="flex items-center gap-3 pt-4 border-t border-slate-700/50">
+        <div className="flex items-center gap-3 pt-4 border-t border-border">
           {/* Avatar with initials */}
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-yellow-500 to-yellow-600 flex items-center justify-center">
-            <span className="text-slate-900 font-bold text-sm">{testimonial.initials}</span>
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-sm">{testimonial.initials}</span>
           </div>
 
           {/* Name and role */}
           <div className="flex-1 min-w-0">
-            <h3 className="text-white font-semibold text-sm truncate">{testimonial.name}</h3>
-            <p className="text-slate-400 text-xs truncate">{testimonial.role}</p>
-            <p className="text-yellow-500 text-xs truncate">{testimonial.insurance}</p>
+            <h3 className="text-foreground font-semibold text-sm truncate">{testimonial.name}</h3>
+            <p className="text-muted-foreground text-xs truncate">{testimonial.role}</p>
+            <p className="text-primary text-xs truncate">{testimonial.insurance}</p>
           </div>
         </div>
       </div>

@@ -107,13 +107,13 @@ export function ContactForm() {
   }
 
   return (
-    <section id="contacto" className="relative py-20 px-4 overflow-hidden">
+    <section id="contacto" className="relative py-20 px-4 overflow-hidden bg-background">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950" />
+      <div className="absolute inset-0 bg-background" />
 
       {/* Decorative elements */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
 
       <div className="relative max-w-3xl mx-auto">
         <motion.div
@@ -123,11 +123,11 @@ export function ContactForm() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">¿Querés una cotización o más información?</h2>
-          <p className="text-lg text-slate-300 max-w-2xl mx-auto mb-2">
+          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¿Querés una cotización o más información?</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
             Completá tus datos y te responderé a la brevedad.
           </p>
-          <p className="text-base text-slate-400">Atención personalizada, rápida y 100% online.</p>
+          <p className="text-base text-muted-foreground">Atención personalizada, rápida y 100% online.</p>
         </motion.div>
 
         <motion.div
@@ -137,20 +137,20 @@ export function ContactForm() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative"
         >
-          <div className="relative bg-slate-800/30 backdrop-blur-xl border border-slate-700/30 rounded-3xl p-8 md:p-10 shadow-2xl">
+          <div className="relative bg-card/30 backdrop-blur-xl border border-border rounded-3xl p-8 md:p-10 shadow-2xl">
             {/* Success message */}
             {isSuccess && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="absolute inset-0 bg-slate-900/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
+                className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
               >
                 <div className="text-center">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
-                    <CheckCircle2 className="w-20 h-20 text-yellow-500 mx-auto mb-4" />
+                    <CheckCircle2 className="w-20 h-20 text-primary mx-auto mb-4" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-2">¡Mensaje enviado!</h3>
-                  <p className="text-slate-300">Te responderé a la brevedad.</p>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">¡Mensaje enviado!</h3>
+                  <p className="text-muted-foreground">Te responderé a la brevedad.</p>
                 </div>
               </motion.div>
             )}
@@ -160,21 +160,21 @@ export function ContactForm() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="absolute inset-0 bg-slate-900/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
+                className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
               >
                 <div className="text-center px-6">
                   <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
-                    <AlertCircle className="w-20 h-20 text-red-500 mx-auto mb-4" />
+                    <AlertCircle className="w-20 h-20 text-destructive mx-auto mb-4" />
                   </motion.div>
-                  <h3 className="text-2xl font-bold text-white mb-2">Error al enviar</h3>
-                  <p className="text-slate-300 mb-4">
+                  <h3 className="text-2xl font-bold text-foreground mb-2">Error al enviar</h3>
+                  <p className="text-muted-foreground mb-4">
                     Hubo un problema al enviar tu mensaje. Por favor, intentá nuevamente o contactame por WhatsApp.
                   </p>
                   <a
                     href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block px-6 py-2 bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold rounded-lg transition-colors"
+                    className="inline-block px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors"
                   >
                     Ir a WhatsApp
                   </a>
@@ -182,7 +182,7 @@ export function ContactForm() {
               </motion.div>
             )}
 
-            <p className="text-sm text-slate-400 mb-6 text-center">Todos los campos son obligatorios</p>
+            <p className="text-sm text-muted-foreground mb-6 text-center">Todos los campos son obligatorios</p>
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid md:grid-cols-2 gap-5">
@@ -195,13 +195,12 @@ export function ContactForm() {
                     value={formData.name}
                     onChange={handleChange}
                     placeholder=" "
-                    className={`peer w-full px-4 py-3.5 bg-slate-900/40 border ${
-                      errors.name ? "border-red-500/50" : "border-slate-600/30"
-                    } rounded-xl text-white placeholder-transparent focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20 transition-all duration-300`}
+                    className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.name ? "border-destructive/50" : "border-input/30"
+                      } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
                   />
                   <label
                     htmlFor="name"
-                    className="absolute left-4 -top-2.5 bg-slate-900 px-2 text-sm text-slate-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-slate-500 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-yellow-500"
+                    className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
                   >
                     Nombre y Apellido
                   </label>
@@ -209,7 +208,7 @@ export function ContactForm() {
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-1.5 text-sm text-red-400"
+                      className="mt-1.5 text-sm text-destructive"
                     >
                       {errors.name}
                     </motion.p>
@@ -225,13 +224,12 @@ export function ContactForm() {
                     value={formData.phone}
                     onChange={handleChange}
                     placeholder=" "
-                    className={`peer w-full px-4 py-3.5 bg-slate-900/40 border ${
-                      errors.phone ? "border-red-500/50" : "border-slate-600/30"
-                    } rounded-xl text-white placeholder-transparent focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20 transition-all duration-300`}
+                    className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.phone ? "border-destructive/50" : "border-input/30"
+                      } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
                   />
                   <label
                     htmlFor="phone"
-                    className="absolute left-4 -top-2.5 bg-slate-900 px-2 text-sm text-slate-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-slate-500 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-yellow-500"
+                    className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
                   >
                     Teléfono o WhatsApp
                   </label>
@@ -239,7 +237,7 @@ export function ContactForm() {
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="mt-1.5 text-sm text-red-400"
+                      className="mt-1.5 text-sm text-destructive"
                     >
                       {errors.phone}
                     </motion.p>
@@ -256,13 +254,12 @@ export function ContactForm() {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder=" "
-                  className={`peer w-full px-4 py-3.5 bg-slate-900/40 border ${
-                    errors.email ? "border-red-500/50" : "border-slate-600/30"
-                  } rounded-xl text-white placeholder-transparent focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20 transition-all duration-300`}
+                  className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.email ? "border-destructive/50" : "border-input/30"
+                    } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
                 />
                 <label
                   htmlFor="email"
-                  className="absolute left-4 -top-2.5 bg-slate-900 px-2 text-sm text-slate-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-slate-500 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-yellow-500"
+                  className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
                 >
                   Email
                 </label>
@@ -270,7 +267,7 @@ export function ContactForm() {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-red-400"
+                    className="mt-1.5 text-sm text-destructive"
                   >
                     {errors.email}
                   </motion.p>
@@ -284,37 +281,35 @@ export function ContactForm() {
                   name="insuranceType"
                   value={formData.insuranceType}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3.5 bg-slate-900/40 border ${
-                    errors.insuranceType ? "border-red-500/50" : "border-slate-600/30"
-                  } rounded-xl text-white focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20 transition-all duration-300 appearance-none cursor-pointer ${
-                    !formData.insuranceType && "text-slate-500"
-                  }`}
+                  className={`w-full px-4 py-3.5 bg-input/40 border ${errors.insuranceType ? "border-destructive/50" : "border-input/30"
+                    } rounded-xl text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300 appearance-none cursor-pointer ${!formData.insuranceType && "text-muted-foreground"
+                    }`}
                 >
                   <option value="" disabled>
                     Tipo de seguro de interés
                   </option>
-                  <option value="auto" className="bg-slate-900 text-white">
+                  <option value="auto" className="bg-card text-foreground">
                     Auto
                   </option>
-                  <option value="hogar" className="bg-slate-900 text-white">
+                  <option value="hogar" className="bg-card text-foreground">
                     Hogar
                   </option>
-                  <option value="vida" className="bg-slate-900 text-white">
+                  <option value="vida" className="bg-card text-foreground">
                     Vida
                   </option>
-                  <option value="accidentes" className="bg-slate-900 text-white">
+                  <option value="accidentes" className="bg-card text-foreground">
                     Accidentes Personales
                   </option>
-                  <option value="pyme" className="bg-slate-900 text-white">
+                  <option value="pyme" className="bg-card text-foreground">
                     PyME
                   </option>
-                  <option value="otro" className="bg-slate-900 text-white">
+                  <option value="otro" className="bg-card text-foreground">
                     Otro
                   </option>
                 </select>
                 {/* Custom dropdown arrow */}
                 <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -322,7 +317,7 @@ export function ContactForm() {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-red-400"
+                    className="mt-1.5 text-sm text-destructive"
                   >
                     {errors.insuranceType}
                   </motion.p>
@@ -338,13 +333,12 @@ export function ContactForm() {
                   onChange={handleChange}
                   placeholder=" "
                   rows={4}
-                  className={`peer w-full px-4 py-3.5 bg-slate-900/40 border ${
-                    errors.message ? "border-red-500/50" : "border-slate-600/30"
-                  } rounded-xl text-white placeholder-transparent focus:outline-none focus:border-yellow-500/50 focus:ring-2 focus:ring-yellow-500/20 transition-all duration-300 resize-none`}
+                  className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.message ? "border-destructive/50" : "border-input/30"
+                    } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none`}
                 />
                 <label
                   htmlFor="message"
-                  className="absolute left-4 -top-2.5 bg-slate-900 px-2 text-sm text-slate-400 transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-slate-500 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-yellow-500"
+                  className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
                 >
                   Mensaje
                 </label>
@@ -352,7 +346,7 @@ export function ContactForm() {
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-red-400"
+                    className="mt-1.5 text-sm text-destructive"
                   >
                     {errors.message}
                   </motion.p>
@@ -363,7 +357,7 @@ export function ContactForm() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold py-6 text-lg rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-yellow-500/30 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center gap-2">

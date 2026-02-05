@@ -63,7 +63,7 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         isScrolled
-          ? "bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-slate-800"
+          ? "bg-primary/95 backdrop-blur-md shadow-lg border-b border-white/10"
           : "bg-transparent"
       )}
     >
@@ -81,10 +81,10 @@ export function Navbar() {
             whileTap={{ scale: 0.98 }}
           >
             <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-bold text-yellow-500 font-heading leading-tight">
+              <span className="text-xl md:text-2xl font-bold font-heading leading-tight text-[var(--light-pink)]">
                 Verónica Mercado
               </span>
-              <span className="text-xs text-slate-400 tracking-wide">Asesora de Seguros</span>
+              <span className="text-xs text-white/80 tracking-wide">Asesora de Seguros</span>
             </div>
           </motion.a>
 
@@ -101,8 +101,8 @@ export function Navbar() {
                 className={cn(
                   "px-3 lg:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
                   activeSection === item.href.substring(1)
-                    ? "text-yellow-500 bg-yellow-500/10"
-                    : "text-slate-300 hover:text-yellow-500 hover:bg-slate-800/50"
+                    ? "text-[var(--light-pink)] bg-white/10"
+                    : "text-white/80 hover:text-[var(--light-pink)] hover:bg-white/5"
                 )}
               >
                 {item.name}
@@ -114,7 +114,7 @@ export function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Button
               size="sm"
-              className="bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
+              className="font-semibold"
               asChild
             >
               <a
@@ -135,7 +135,7 @@ export function Navbar() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden text-white hover:bg-slate-800"
+                className="md:hidden text-[var(--light-pink)] hover:bg-white/10"
                 aria-label="Abrir menú"
               >
                 <Menu className="w-6 h-6" />
@@ -143,15 +143,15 @@ export function Navbar() {
             </SheetTrigger>
             <SheetContent
               side="right"
-              className="w-[300px] bg-slate-900 border-slate-800 p-0"
+              className="w-[300px] bg-primary border-white/10 p-0"
             >
               <div className="flex flex-col h-full">
                 {/* Mobile Header */}
-                <div className="p-6 border-b border-slate-800">
-                  <h2 className="text-2xl font-bold text-yellow-500 font-heading">
+                <div className="p-6 border-b border-white/10">
+                  <h2 className="text-2xl font-bold text-[var(--light-pink)] font-heading">
                     Verónica Mercado
                   </h2>
-                  <p className="text-sm text-slate-400 mt-1">Asesora de Seguros</p>
+                  <p className="text-sm text-white/70 mt-1">Asesora de Seguros</p>
                 </div>
 
                 {/* Mobile Nav Items */}
@@ -168,8 +168,8 @@ export function Navbar() {
                           className={cn(
                             "px-4 py-3 rounded-lg text-base font-medium transition-all duration-200",
                             activeSection === item.href.substring(1)
-                              ? "text-yellow-500 bg-yellow-500/10"
-                              : "text-slate-300 hover:text-yellow-500 hover:bg-slate-800/50"
+                              ? "text-[var(--light-pink)] bg-white/10"
+                              : "text-white/80 hover:text-[var(--light-pink)] hover:bg-white/5"
                           )}
                         >
                           {item.name}
@@ -180,10 +180,10 @@ export function Navbar() {
                 </nav>
 
                 {/* Mobile CTA */}
-                <div className="p-4 border-t border-slate-800">
+                <div className="p-4 border-t border-border">
                   <Button
                     size="lg"
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-semibold"
+                    className="w-full font-semibold"
                     asChild
                   >
                     <a
