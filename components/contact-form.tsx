@@ -3,10 +3,23 @@
 import type React from "react"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
-import { Send, CheckCircle2, AlertCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Send, CheckCircle2, AlertCircle, MessageCircle, Phone, Mail } from "lucide-react"
 import emailjs from "@emailjs/browser"
+import { EMAIL, TELEFONO_VISIBLE, WHATSAPP_NUMERO, whatsappUrl } from "@/lib/contenido"
+import { Aparecer } from "@/components/movimiento"
+
+const TIPOS = [
+  { value: "auto", label: "Auto o moto" },
+  { value: "hogar", label: "Hogar" },
+  { value: "vida", label: "Vida" },
+  { value: "accidentes", label: "Accidentes personales" },
+  { value: "pyme", label: "Empresa o comercio" },
+  { value: "campo", label: "Campo" },
+  { value: "otro", label: "Otro" },
+]
+
+const campo =
+  "w-full rounded-xl border bg-white px-4 py-3 text-tinta transition-colors placeholder:text-gris-texto/60 focus:border-bordo focus:ring-2 focus:ring-bordo/15 focus:outline-none"
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -68,18 +81,16 @@ export function ContactForm() {
         phone: formData.phone,
         insurance_type: formData.insuranceType,
         message: formData.message,
-        to_email: "veronicamercadoseguros@gmail.com",
+        to_email: EMAIL,
       }
 
       // Enviar email usando EmailJS
-      const response = await emailjs.send(
+      await emailjs.send(
         process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
         process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
         templateParams,
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ""
       )
-
-      console.log("Email enviado exitosamente:", response.status, response.text)
 
       setIsSubmitting(false)
       setIsSuccess(true)
@@ -106,283 +117,191 @@ export function ContactForm() {
     }
   }
 
+  const borde = (name: string) => (errors[name] ? "border-destructive" : "border-linea")
+
+  const MensajeError = ({ name }: { name: string }) =>
+    errors[name] ? (
+      <p id={`${name}-error`} className="mt-1.5 text-sm text-destructive">
+        {errors[name]}
+      </p>
+    ) : null
+
+  const describe = (name: string) => (errors[name] ? `${name}-error` : undefined)
+
   return (
-    <section id="contacto" className="relative py-20 px-4 overflow-hidden bg-background">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-background" />
-
-      {/* Decorative elements */}
-      <div className="absolute top-1/4 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-
-      <div className="relative max-w-3xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-10"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">¿Querés una cotización o más información?</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
-            Completá tus datos y te responderé a la brevedad.
+    <section id="contacto" aria-labelledby="contacto-titulo" className="bg-fondo-suave py-20 lg:py-28">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 lg:grid-cols-[5fr_7fr] lg:gap-20 lg:px-8">
+        <Aparecer>
+          <h2 id="contacto-titulo" className="font-serif text-4xl leading-tight font-medium text-tinta lg:text-5xl">
+            Hablemos de tu seguro
+          </h2>
+          <p className="mt-4 max-w-md text-lg leading-relaxed text-gris-texto">
+            La consulta no tiene costo. Lo más rápido es WhatsApp.
           </p>
-          <p className="text-base text-muted-foreground">Atención personalizada, rápida y 100% online.</p>
-        </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="relative"
-        >
-          <div className="relative bg-card/30 backdrop-blur-xl border border-border rounded-3xl p-8 md:p-10 shadow-2xl">
-            {/* Success message */}
-            {isSuccess && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
-              >
-                <div className="text-center">
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
-                    <CheckCircle2 className="w-20 h-20 text-primary mx-auto mb-4" />
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">¡Mensaje enviado!</h3>
-                  <p className="text-muted-foreground">Te responderé a la brevedad.</p>
-                </div>
-              </motion.div>
-            )}
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 flex items-center gap-4 rounded-2xl bg-bordo p-5 text-white transition-colors hover:bg-bordo-oscuro"
+          >
+            <span className="flex h-12 w-12 flex-none items-center justify-center rounded-full bg-white/15">
+              <MessageCircle className="h-6 w-6" aria-hidden="true" />
+            </span>
+            <span>
+              <span className="block font-semibold">Escribime por WhatsApp</span>
+              <span className="block text-sm text-white/80">{TELEFONO_VISIBLE}</span>
+            </span>
+          </a>
 
-            {/* Error message */}
-            {isError && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="absolute inset-0 bg-background/95 backdrop-blur-sm rounded-3xl flex items-center justify-center z-10"
-              >
-                <div className="text-center px-6">
-                  <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.2, type: "spring" }}>
-                    <AlertCircle className="w-20 h-20 text-destructive mx-auto mb-4" />
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">Error al enviar</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Hubo un problema al enviar tu mensaje. Por favor, intentá nuevamente o contactame por WhatsApp.
-                  </p>
-                  <a
-                    href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors"
-                  >
-                    Ir a WhatsApp
-                  </a>
-                </div>
-              </motion.div>
-            )}
+          <ul className="mt-6 space-y-3 text-tinta">
+            <li>
+              <a href={`tel:+${WHATSAPP_NUMERO}`} className="inline-flex items-center gap-3 hover:text-bordo">
+                <Phone className="h-5 w-5 text-dorado" aria-hidden="true" />
+                {TELEFONO_VISIBLE}
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${EMAIL}`} className="inline-flex items-center gap-3 break-all hover:text-bordo">
+                <Mail className="h-5 w-5 flex-none text-dorado" aria-hidden="true" />
+                {EMAIL}
+              </a>
+            </li>
+          </ul>
+        </Aparecer>
 
-            <p className="text-sm text-muted-foreground mb-6 text-center">Todos los campos son obligatorios</p>
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid md:grid-cols-2 gap-5">
-                {/* Name field */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder=" "
-                    className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.name ? "border-destructive/50" : "border-input/30"
-                      } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
-                  />
-                  <label
-                    htmlFor="name"
-                    className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
-                  >
-                    Nombre y Apellido
-                  </label>
-                  {errors.name && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-1.5 text-sm text-destructive"
-                    >
-                      {errors.name}
-                    </motion.p>
-                  )}
-                </div>
-
-                {/* Phone field */}
-                <div className="relative">
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder=" "
-                    className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.phone ? "border-destructive/50" : "border-input/30"
-                      } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
-                  />
-                  <label
-                    htmlFor="phone"
-                    className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
-                  >
-                    Teléfono o WhatsApp
-                  </label>
-                  {errors.phone && (
-                    <motion.p
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="mt-1.5 text-sm text-destructive"
-                    >
-                      {errors.phone}
-                    </motion.p>
-                  )}
-                </div>
+        <Aparecer demora={0.08}>
+          <form onSubmit={handleSubmit} noValidate className="rounded-3xl border border-linea bg-white p-6 sm:p-8">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Nombre y apellido
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={describe("name")}
+                  className={`${campo} ${borde("name")}`}
+                />
+                <MensajeError name="name" />
               </div>
 
-              {/* Email field */}
-              <div className="relative">
+              <div>
+                <label htmlFor="phone" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Teléfono o WhatsApp
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  autoComplete="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  aria-invalid={!!errors.phone}
+                  aria-describedby={describe("phone")}
+                  className={`${campo} ${borde("phone")}`}
+                />
+                <MensajeError name="phone" />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Email
+                </label>
                 <input
                   type="email"
                   id="email"
                   name="email"
+                  autoComplete="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder=" "
-                  className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.email ? "border-destructive/50" : "border-input/30"
-                    } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300`}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={describe("email")}
+                  className={`${campo} ${borde("email")}`}
                 />
-                <label
-                  htmlFor="email"
-                  className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
-                >
-                  Email
-                </label>
-                {errors.email && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-destructive"
-                  >
-                    {errors.email}
-                  </motion.p>
-                )}
+                <MensajeError name="email" />
               </div>
 
-              {/* Insurance type dropdown */}
-              <div className="relative">
+              <div>
+                <label htmlFor="insuranceType" className="mb-1.5 block text-sm font-medium text-tinta">
+                  ¿Qué querés asegurar?
+                </label>
                 <select
                   id="insuranceType"
                   name="insuranceType"
                   value={formData.insuranceType}
                   onChange={handleChange}
-                  className={`w-full px-4 py-3.5 bg-input/40 border ${errors.insuranceType ? "border-destructive/50" : "border-input/30"
-                    } rounded-xl text-foreground focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300 appearance-none cursor-pointer ${!formData.insuranceType && "text-muted-foreground"
-                    }`}
+                  aria-invalid={!!errors.insuranceType}
+                  aria-describedby={describe("insuranceType")}
+                  className={`${campo} ${borde("insuranceType")} cursor-pointer`}
                 >
                   <option value="" disabled>
-                    Tipo de seguro de interés
+                    Elegí una opción
                   </option>
-                  <option value="auto" className="bg-card text-foreground">
-                    Auto
-                  </option>
-                  <option value="hogar" className="bg-card text-foreground">
-                    Hogar
-                  </option>
-                  <option value="vida" className="bg-card text-foreground">
-                    Vida
-                  </option>
-                  <option value="accidentes" className="bg-card text-foreground">
-                    Accidentes Personales
-                  </option>
-                  <option value="pyme" className="bg-card text-foreground">
-                    PyME
-                  </option>
-                  <option value="otro" className="bg-card text-foreground">
-                    Otro
-                  </option>
+                  {TIPOS.map((t) => (
+                    <option key={t.value} value={t.value}>
+                      {t.label}
+                    </option>
+                  ))}
                 </select>
-                {/* Custom dropdown arrow */}
-                <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
-                  <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-                {errors.insuranceType && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-destructive"
-                  >
-                    {errors.insuranceType}
-                  </motion.p>
-                )}
+                <MensajeError name="insuranceType" />
               </div>
 
-              {/* Message field */}
-              <div className="relative">
+              <div className="sm:col-span-2">
+                <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-tinta">
+                  Contame tu caso
+                </label>
                 <textarea
                   id="message"
                   name="message"
+                  rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder=" "
-                  rows={4}
-                  className={`peer w-full px-4 py-3.5 bg-input/40 border ${errors.message ? "border-destructive/50" : "border-input/30"
-                    } rounded-xl text-foreground placeholder-transparent focus:outline-none focus:border-primary/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300 resize-none`}
+                  aria-invalid={!!errors.message}
+                  aria-describedby={describe("message")}
+                  className={`${campo} ${borde("message")} resize-none`}
                 />
-                <label
-                  htmlFor="message"
-                  className="absolute left-4 -top-2.5 bg-card px-2 text-sm text-muted-foreground transition-all duration-300 peer-placeholder-shown:text-base peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-muted-foreground peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary"
-                >
-                  Mensaje
-                </label>
-                {errors.message && (
-                  <motion.p
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-1.5 text-sm text-destructive"
-                  >
-                    {errors.message}
-                  </motion.p>
-                )}
+                <MensajeError name="message" />
               </div>
+            </div>
 
-              {/* Submit button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 text-lg rounded-xl transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-              >
-                {isSubmitting ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{
-                        duration: 1,
-                        repeat: Number.POSITIVE_INFINITY,
-                        ease: "linear",
-                      }}
-                    >
-                      <Send className="w-5 h-5" />
-                    </motion.div>
-                    Enviando...
+            <div aria-live="polite">
+              {isSuccess && (
+                <p className="mt-5 flex items-start gap-2 rounded-xl bg-green-50 p-4 text-green-900">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none" aria-hidden="true" />
+                  Mensaje enviado. Te respondo a la brevedad.
+                </p>
+              )}
+              {isError && (
+                <p className="mt-5 flex items-start gap-2 rounded-xl bg-red-50 p-4 text-red-900">
+                  <AlertCircle className="mt-0.5 h-5 w-5 flex-none" aria-hidden="true" />
+                  <span>
+                    No se pudo enviar el mensaje. Probá de nuevo o{" "}
+                    <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="font-semibold underline">
+                      escribime por WhatsApp
+                    </a>
+                    .
                   </span>
-                ) : (
-                  <span className="flex items-center justify-center gap-2">
-                    <Send className="w-5 h-5" />
-                    Quiero mi cotización
-                  </span>
-                )}
-              </Button>
-            </form>
-          </div>
-        </motion.div>
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-bordo px-6 py-4 font-semibold text-white transition-colors hover:bg-bordo-oscuro disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              <Send className="h-5 w-5" aria-hidden="true" />
+              {isSubmitting ? "Enviando..." : "Pedir mi cotización"}
+            </button>
+            <p className="mt-3 text-center text-sm text-gris-texto">Todos los campos son obligatorios.</p>
+          </form>
+        </Aparecer>
       </div>
     </section>
   )

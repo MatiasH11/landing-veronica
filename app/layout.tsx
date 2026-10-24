@@ -1,26 +1,28 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Outfit } from "next/font/google"
+import { Hanken_Grotesk, Source_Serif_4 } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
 import { Navbar } from "@/components/navbar"
+import { Movimiento } from "@/components/movimiento"
 import "./globals.css"
 
-const inter = Inter({
+const hanken = Hanken_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-hanken",
   display: "swap",
 })
 
-const outfit = Outfit({
+const sourceSerif = Source_Serif_4({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  axes: ["opsz"],
+  variable: "--font-source-serif",
   display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "Seguros Verónica Mercado",
-  description: "Seguros para cada necesidad - Protección perfecta para ti y tu empresa",
-  generator: "v0.app",
+  title: "Verónica Mercado | Productora asesora de seguros",
+  description:
+    "Asesoramiento personal en seguros para personas, empresas y el campo. Comparo entre las mejores compañías y te acompaño antes, durante y después de un siniestro.",
 }
 
 export default function RootLayout({
@@ -29,10 +31,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${outfit.variable}`}>
+    <html lang="es" className={`${hanken.variable} ${sourceSerif.variable}`}>
       <body className="font-sans antialiased">
-        <Navbar />
-        {children}
+        <Movimiento>
+          <Navbar />
+          {children}
+        </Movimiento>
         <Analytics />
       </body>
     </html>
