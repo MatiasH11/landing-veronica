@@ -12,7 +12,8 @@ Landing de una productora de seguros. One-page, en español rioplatense. Deploy 
 
 - Next.js 16 (App Router, Turbopack) + React 19.2 + TypeScript.
 - Tailwind CSS 4 (config en CSS, `@theme inline` en `app/globals.css`) + shadcn/ui (Radix) en `components/ui/`.
-- Animación: `framer-motion` (versión fijada). GSAP + ScrollTrigger y Lenis, si están en `package.json`.
+- Animación: `framer-motion` (versión fijada). GSAP está instalado pero sin uso; Lenis se sacó a propósito (scroll
+  nativo).
 - Formulario: `@emailjs/browser` desde el cliente (`components/contact-form.tsx`).
 - `@vercel/analytics` en `app/layout.tsx`.
 - Gestor: **pnpm** (hay `pnpm-lock.yaml`; Vercel instala con lockfile congelado, así que `package.json` y el lock
@@ -31,33 +32,36 @@ pnpm lint    # el script existe pero eslint no está instalado: hoy falla
 
 ## Estructura
 
-- `app/layout.tsx`: fuentes (Inter → `font-sans`, Outfit → `font-heading`), `<Navbar />` fijo y Analytics.
-- `app/page.tsx`: orden de secciones → `Hero` (#inicio) · `TrustBadges` · `InsuranceServices` (#servicios) ·
-  `HowIWork` (#como-funciona) · `AboutMe` (#sobre-mi) · `Testimonials` (#testimonios) · `ContactForm` (#contacto) ·
-  `Footer`. Los anchors los usan navbar y footer.
-- `components/*.tsx`: una sección por archivo, todas `"use client"` con framer-motion (`whileInView`).
-- `app/globals.css`: tokens de marca (bordó `--primary: #78020E`, `--light-pink: #FFE2E6`). `.dark` es copia de
-  `:root` (no hay modo oscuro real).
+- `app/layout.tsx`: fuentes (Source Serif 4 → `font-serif` para títulos, Hanken Grotesk → `font-sans`), `<Navbar />`
+  sticky, `<Movimiento>` (MotionConfig con `reducedMotion="user"`) y Analytics.
+- `app/page.tsx`: `Hero` (#inicio) · `Acompanamiento` (#acompanamiento) · `Coberturas` (#coberturas) · `AboutMe`
+  (#sobre-mi) · `Testimonials` (#testimonios) · `EducacionVial` · `ContactForm` (#contacto) · `Footer` ·
+  `CtaWhatsapp` (barra fija, solo mobile).
+- `lib/contenido.ts`: **todo el contenido** (WhatsApp, matrícula, coberturas de Personas/Empresas/Campo, pasos del
+  acompañamiento, testimonios reales, educación vial). Se edita ahí, no en los componentes.
+- `components/movimiento.tsx`: `Aparecer`, la animación de entrada de secciones (corta, una vez, sin usar en el hero).
+- `components/recorrido.tsx`: los pasos de acompañamiento. En escritorio, un teléfono sticky muestra un chat que
+  avanza con la etapa activa (IntersectionObserver en el centro de la pantalla) y el hilo dorado se llena con el
+  scroll; en mobile, cada paso lleva su `Conversacion`. Es scroll nativo: no pinear ni controlar el scroll.
+- `components/boton-flotante.tsx`: WhatsApp flotante (en escritorio aparece después del hero) con un saludo que se
+  muestra una vez por visita (`sessionStorage`).
+- Hero: `.hero-entra` / `.hero-foto` en `globals.css` animan solo la bajada, los botones y la foto; el `h1` no.
+- `public/veronica/`: fotos y logos de Verónica (monograma recortado del sello en `monograma.webp`).
+- `app/globals.css`: tokens `--bordo`, `--dorado`, `--pizarra`, `--tinta`, etc., expuestos como clases Tailwind
+  (`bg-bordo`, `text-dorado`…). `.dark` es copia de `:root` (no hay modo oscuro real).
 - `styles/globals.css`: **muerto** (no se importa; es el default de v0). No editarlo.
-- WhatsApp: `https://wa.me/5492236011753?text=...` repetido en hero, navbar, servicios, cómo trabajo, testimonios,
-  contacto y footer.
 
-## Reglas de diseño (rediseño)
+## Reglas de diseño
 
-- **Nada de landing estándar**: dirección propia (guía: skill `frontend-design`; ilustraciones isométricas de
-  coberturas: skill `anatomy`). Distinta, pero con la sobriedad y confianza del rubro seguros.
-- **Animaciones con propósito**: cada una explica, guía o da feedback. Nada decorativo que demore el contenido.
-- **`prefers-reduced-motion` obligatorio** en todo movimiento:
-  - CSS: `@media (prefers-reduced-motion: reduce)`.
-  - framer-motion: `<MotionConfig reducedMotion="user">` (hoy no está en ningún lado) o `useReducedMotion()`.
-  - GSAP: `gsap.matchMedia()` con `(prefers-reduced-motion: no-preference)`.
-  - Lenis lo respeta por defecto (`respectReducedMotion`); no desactivarlo.
-- **El CTA de cotización / WhatsApp siempre visible**: en mobile y desktop, en cualquier punto del scroll, sin
-  quedar tapado por animaciones, pins de ScrollTrigger ni el menú.
-- **LCP cuidado en mobile**: el hero no puede depender de JS ni de una animación de entrada para mostrarse.
-  Hoy el hero usa `<img>` crudo, `images.unoptimized: true` y la foto de "Sobre mí" viene de un blob remoto de
-  Vercel: son las palancas a revisar. Medir con chrome-devtools-mcp (`debug-optimize-lcp`, `a11y-debugging`).
-- **Scroll suave**: si se integra Lenis, sacar `html { scroll-behavior: smooth }` de `app/globals.css` (choca con
-  Lenis) y resolver los anchors con la opción `anchors` de Lenis o `lenis.scrollTo`.
-- GSAP en React: siempre `useGSAP()` de `@gsap/react` (limpieza automática), plugins registrados una vez en un
-  módulo cliente. `app/layout.tsx` es server component: los providers de animación van en un wrapper `"use client"`.
+- **Clara y fácil de recorrer, distinta en los detalles.** Estructura conocida; la distinción viene de la foto, la
+  tipografía serif, el dorado del logo y detalles cuidados. Nada de información escondida detrás de una interacción,
+  scroll controlado ni piezas conceptuales: el usuario las rechazó en los bocetos (rama `bocetos/direcciones`).
+- **Eje del mensaje: acompañamiento personal** (antes, durante y después) y comparar las mejores compañías al mejor
+  precio.
+- **Color:** bordó para toda acción (CTA, links), dorado solo como acento puntual (sello, numerales, líneas finas),
+  pizarra de las fotos para el hero y bloques oscuros.
+- **Animaciones con propósito y `prefers-reduced-motion` obligatorio:** `Aparecer` y transiciones de interacción,
+  todo bajo `MotionConfig reducedMotion="user"`; en CSS, `@media (prefers-reduced-motion: …)`.
+- **El CTA de WhatsApp siempre visible:** botón en la barra en ≥640 px y botón flotante en toda la página.
+- **LCP cuidado en mobile:** el hero es server component, sin animación de entrada, con `next/image` `priority`.
+  Medir con chrome-devtools-mcp (`debug-optimize-lcp`, `a11y-debugging`).

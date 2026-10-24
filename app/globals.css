@@ -39,6 +39,17 @@
   --sidebar-border: rgba(255, 255, 255, 0.2);
   --sidebar-ring: #FFFFFF;
   --light-pink: #FFE2E6;
+  /* Rediseño: bordó para la acción, dorado del logo como acento puntual, pizarra de las fotos */
+  --bordo: #78020E;
+  --bordo-oscuro: #5C010A;
+  --dorado: #A87A2A;
+  --dorado-claro: #E4C886;
+  --pizarra: #625A55;
+  --pizarra-oscura: #3E3835;
+  --tinta: #221D1C;
+  --gris-texto: #5E5856;
+  --linea: #E7E2DE;
+  --fondo-suave: #F5F3F1;
 }
 
 .dark {
@@ -77,8 +88,18 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-inter), "Inter", system-ui, -apple-system, sans-serif;
-  --font-heading: var(--font-outfit), "Outfit", system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-hanken), system-ui, -apple-system, sans-serif;
+  --font-serif: var(--font-source-serif), Georgia, serif;
+  --color-bordo: var(--bordo);
+  --color-bordo-oscuro: var(--bordo-oscuro);
+  --color-dorado: var(--dorado);
+  --color-dorado-claro: var(--dorado-claro);
+  --color-pizarra: var(--pizarra);
+  --color-pizarra-oscura: var(--pizarra-oscura);
+  --color-tinta: var(--tinta);
+  --color-gris-texto: var(--gris-texto);
+  --color-linea: var(--linea);
+  --color-fondo-suave: var(--fondo-suave);
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -125,10 +146,58 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-tinta;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--bordo);
+    outline-offset: 3px;
+  }
+}
+
+/* Pulso del botón flotante de WhatsApp */
+@keyframes pulso {
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Entrada del hero: solo lo secundario (bajada, botones, sello) y un leve acercamiento de la foto.
+   El título no se anima: es el LCP y tiene que pintarse en el primer cuadro. */
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@keyframes acercar {
+  from {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-entra {
+    animation: entrar 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-foto {
+    animation: acercar 1.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 }

@@ -1,208 +1,90 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
+import Image from "next/image"
 import { Menu, MessageCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet"
-import { cn } from "@/lib/utils"
+import { Sheet, SheetContent, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet"
+import { SECCIONES, whatsappUrl } from "@/lib/contenido"
 
-const navItems = [
-  { name: "Inicio", href: "#inicio" },
-  { name: "Servicios", href: "#servicios" },
-  { name: "Cómo Funciona", href: "#como-funciona" },
-  { name: "Sobre Mí", href: "#sobre-mi" },
-  { name: "Testimonios", href: "#testimonios" },
-  { name: "Contacto", href: "#contacto" },
-]
+function Marca() {
+  return (
+    <a href="#inicio" className="flex items-center gap-3">
+      <Image src="/veronica/monograma.webp" alt="" width={34} height={36} priority className="h-9 w-auto" />
+      <span className="flex flex-col leading-tight">
+        <span className="font-serif text-lg font-semibold text-tinta">Verónica Mercado</span>
+        <span className="text-xs text-gris-texto">Productora asesora de seguros</span>
+      </span>
+    </a>
+  )
+}
 
 export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("inicio")
+  const [bajo, setBajo] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-
-      // Detect active section
-      const sections = navItems.map((item) => item.href.substring(1))
-      const current = sections.find((section) => {
-        const element = document.getElementById(section)
-        if (element) {
-          const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
-        }
-        return false
-      })
-      if (current) setActiveSection(current)
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    const actualizar = () => setBajo(window.scrollY > 8)
+    actualizar()
+    window.addEventListener("scroll", actualizar, { passive: true })
+    return () => window.removeEventListener("scroll", actualizar)
   }, [])
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href)
-    if (element) {
-      const offset = 80 // navbar height
-      const elementPosition = element.getBoundingClientRect().top
-      const offsetPosition = elementPosition + window.pageYOffset - offset
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      })
-    }
-  }
-
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled
-          ? "bg-primary/95 backdrop-blur-md shadow-lg border-b border-white/10"
-          : "bg-transparent"
-      )}
+    <header
+      className={`sticky top-0 z-50 border-b bg-white/95 backdrop-blur transition-[box-shadow,border-color] duration-300 supports-[backdrop-filter]:bg-white/85 ${
+        bajo ? "border-transparent shadow-[0_8px_24px_-16px_rgba(34,29,28,0.35)]" : "border-linea"
+      }`}
     >
-      <nav className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <motion.a
-            href="#inicio"
-            onClick={(e) => {
-              e.preventDefault()
-              scrollToSection("#inicio")
-            }}
-            className="flex items-center gap-2 group"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+      <nav aria-label="Principal" className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-6 px-4 lg:px-8">
+        <Marca />
+
+        <ul className="hidden items-center gap-1 lg:flex">
+          {SECCIONES.map((s) => (
+            <li key={s.href}>
+              <a
+                href={s.href}
+                className="rounded-md px-3 py-2 text-sm font-medium text-gris-texto transition-colors hover:text-bordo"
+              >
+                {s.nombre}
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={whatsappUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hidden items-center gap-2 rounded-full bg-bordo px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-bordo-oscuro sm:inline-flex"
           >
-            <div className="flex flex-col">
-              <span className="text-xl md:text-2xl font-bold font-heading leading-tight text-[var(--light-pink)]">
-                Verónica Mercado
-              </span>
-              <span className="text-xs text-white/80 tracking-wide">Asesora de Seguros</span>
-            </div>
-          </motion.a>
+            <MessageCircle className="h-4 w-4" aria-hidden="true" />
+            Cotizá por WhatsApp
+          </a>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1 lg:gap-2">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault()
-                  scrollToSection(item.href)
-                }}
-                className={cn(
-                  "px-3 lg:px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-                  activeSection === item.href.substring(1)
-                    ? "text-[var(--light-pink)] bg-white/10"
-                    : "text-white/80 hover:text-[var(--light-pink)] hover:bg-white/5"
-                )}
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <Button
-              size="sm"
-              className="font-semibold"
-              asChild
-            >
-              <a
-                href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4" />
-                Cotizá ahora
-              </a>
-            </Button>
-          </div>
-
-          {/* Mobile Menu */}
           <Sheet>
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="md:hidden text-[var(--light-pink)] hover:bg-white/10"
-                aria-label="Abrir menú"
-              >
-                <Menu className="w-6 h-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent
-              side="right"
-              className="w-[300px] bg-primary border-white/10 p-0"
+            <SheetTrigger
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-tinta hover:bg-fondo-suave lg:hidden"
+              aria-label="Abrir menú"
             >
-              <div className="flex flex-col h-full">
-                {/* Mobile Header */}
-                <div className="p-6 border-b border-white/10">
-                  <h2 className="text-2xl font-bold text-[var(--light-pink)] font-heading">
-                    Verónica Mercado
-                  </h2>
-                  <p className="text-sm text-white/70 mt-1">Asesora de Seguros</p>
-                </div>
-
-                {/* Mobile Nav Items */}
-                <nav className="flex-1 px-4 py-6">
-                  <div className="flex flex-col gap-2">
-                    {navItems.map((item) => (
-                      <SheetClose key={item.name} asChild>
-                        <a
-                          href={item.href}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            scrollToSection(item.href)
-                          }}
-                          className={cn(
-                            "px-4 py-3 rounded-lg text-base font-medium transition-all duration-200",
-                            activeSection === item.href.substring(1)
-                              ? "text-[var(--light-pink)] bg-white/10"
-                              : "text-white/80 hover:text-[var(--light-pink)] hover:bg-white/5"
-                          )}
-                        >
-                          {item.name}
-                        </a>
-                      </SheetClose>
-                    ))}
-                  </div>
-                </nav>
-
-                {/* Mobile CTA */}
-                <div className="p-4 border-t border-border">
-                  <Button
-                    size="lg"
-                    className="w-full font-semibold"
-                    asChild
-                  >
-                    <a
-                      href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2"
-                    >
-                      <MessageCircle className="w-5 h-5" />
-                      Cotizá ahora
-                    </a>
-                  </Button>
-                </div>
-              </div>
+              <Menu className="h-6 w-6" aria-hidden="true" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-white p-0">
+              <SheetTitle className="border-b border-linea p-6 font-serif text-xl text-tinta">Verónica Mercado</SheetTitle>
+              <ul className="flex flex-col gap-1 px-4 py-6">
+                {SECCIONES.map((s) => (
+                  <li key={s.href}>
+                    <SheetClose asChild>
+                      <a href={s.href} className="block rounded-md px-4 py-3 text-base font-medium text-tinta hover:bg-fondo-suave">
+                        {s.nombre}
+                      </a>
+                    </SheetClose>
+                  </li>
+                ))}
+              </ul>
             </SheetContent>
           </Sheet>
         </div>
       </nav>
-    </motion.header>
+    </header>
   )
 }
-

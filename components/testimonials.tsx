@@ -1,235 +1,41 @@
-"use client"
-
-import { motion } from "framer-motion"
-import { Star, Quote } from "lucide-react"
-
-const testimonials = [
-  {
-    name: "María González",
-    role: "Dueña de PyME",
-    insurance: "Seguro Empresarial",
-    rating: 5,
-    text: "Verónica me ayudó a encontrar la cobertura perfecta para mi negocio. Su asesoramiento personalizado fue excepcional.",
-    initials: "MG",
-  },
-  {
-    name: "Carlos Rodríguez",
-    role: "Padre de familia",
-    insurance: "Seguro de Vida",
-    rating: 5,
-    text: "El proceso fue muy simple. Me explicó todas las opciones claramente y encontramos la mejor solución para mi familia.",
-    initials: "CR",
-  },
-  {
-    name: "Laura Martínez",
-    role: "Propietaria de vehículo",
-    insurance: "Seguro de Auto",
-    rating: 5,
-    text: "Después de un accidente, Verónica me guió en todo el proceso. Su respaldo hizo que todo fuera mucho más fácil.",
-    initials: "LM",
-  },
-  {
-    name: "Roberto Fernández",
-    role: "Motociclista",
-    insurance: "Seguro de Moto",
-    rating: 5,
-    text: "Encontré la mejor cobertura para mi moto. Me presentó varias opciones de compañías líderes. Excelente servicio.",
-    initials: "RF",
-  },
-  {
-    name: "Ana Sánchez",
-    role: "Propietaria de hogar",
-    insurance: "Combinado Familiar",
-    rating: 5,
-    text: "El seguro combinado cubre todo lo que necesito. Verónica fue muy profesional y me dio la confianza que buscaba.",
-    initials: "AS",
-  },
-  {
-    name: "Diego Pérez",
-    role: "Empresario",
-    insurance: "Múltiples Seguros",
-    rating: 5,
-    text: "Trabajo con Verónica hace más de 3 años. Su atención es impecable, siempre disponible. Una profesional de primer nivel.",
-    initials: "DP",
-  },
-  {
-    name: "Sofía Torres",
-    role: "Freelancer",
-    insurance: "Seguro de Salud",
-    rating: 5,
-    text: "Como trabajadora independiente, necesitaba un seguro accesible. Verónica encontró la opción perfecta para mí.",
-    initials: "ST",
-  },
-  {
-    name: "Javier Morales",
-    role: "Conductor de Uber",
-    insurance: "Seguro de Auto",
-    rating: 5,
-    text: "Necesitaba cobertura especial para mi trabajo. Verónica conoce el mercado y consiguió el mejor precio.",
-    initials: "JM",
-  },
-  {
-    name: "Patricia Ruiz",
-    role: "Jubilada",
-    insurance: "Seguro de Vida",
-    rating: 5,
-    text: "Me asesoró con paciencia y claridad. Ahora mis hijos están protegidos. Muy agradecida por su dedicación.",
-    initials: "PR",
-  },
-  {
-    name: "Martín Silva",
-    role: "Dueño de local",
-    insurance: "Seguro Comercial",
-    rating: 5,
-    text: "Proteger mi local era fundamental. Verónica me consiguió una póliza completa a un precio justo.",
-    initials: "MS",
-  },
-  {
-    name: "Gabriela Vega",
-    role: "Madre de 3",
-    insurance: "Combinado Familiar",
-    rating: 5,
-    text: "Con tres hijos, necesitaba protección integral. Verónica armó un paquete perfecto para nuestra familia.",
-    initials: "GV",
-  },
-  {
-    name: "Fernando Castro",
-    role: "Arquitecto",
-    insurance: "Responsabilidad Civil",
-    rating: 5,
-    text: "El seguro de responsabilidad profesional era complejo. Verónica lo simplificó y encontró la mejor opción.",
-    initials: "FC",
-  },
-]
-
-const firstRow = testimonials.slice(0, 6)
-const secondRow = testimonials.slice(6, 12)
+import { Star } from "lucide-react"
+import { TESTIMONIOS } from "@/lib/contenido"
+import { Aparecer } from "@/components/movimiento"
 
 export function Testimonials() {
   return (
-    <section id="testimonios" className="relative py-24 overflow-hidden bg-muted">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-muted" />
-
-      <div className="relative">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 px-4"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">Lo que dicen mis clientes</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            La confianza de mis clientes es mi mayor logro. Lee sus experiencias y descubre por qué eligen mi
-            asesoramiento.
+    <section id="testimonios" aria-labelledby="testimonios-titulo" className="bg-fondo-suave py-20 lg:py-28">
+      <div className="mx-auto max-w-7xl px-4 lg:px-8">
+        <Aparecer>
+          <h2 id="testimonios-titulo" className="font-serif text-4xl leading-tight font-medium text-tinta lg:text-5xl">
+            Lo que cuentan mis clientes
+          </h2>
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-gris-texto">
+            Personas, familias y empresas que ya trabajan conmigo.
           </p>
-        </motion.div>
+        </Aparecer>
 
-        {/* ... (Existing slider structure is fine, just replacing child components' styles is enough if they inherit correctly, but I need to check the TestimonialCard styles too which are inside this file) */}
-
-        <div className="relative mb-8 overflow-hidden">
-          <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [0, -1920],
-            }}
-            transition={{
-              x: {
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "loop",
-                duration: 40,
-                ease: "linear",
-              },
-            }}
-          >
-            {/* Duplicate testimonials for seamless loop */}
-            {[...firstRow, ...firstRow, ...firstRow].map((testimonial, index) => (
-              <TestimonialCard key={`row1-${index}`} testimonial={testimonial} />
-            ))}
-          </motion.div>
-        </div>
-
-        <div className="relative overflow-hidden">
-          <motion.div
-            className="flex gap-6"
-            animate={{
-              x: [-1920, 0],
-            }}
-            transition={{
-              x: {
-                repeat: Number.POSITIVE_INFINITY,
-                repeatType: "loop",
-                duration: 40,
-                ease: "linear",
-              },
-            }}
-          >
-            {/* Duplicate testimonials for seamless loop */}
-            {[...secondRow, ...secondRow, ...secondRow].map((testimonial, index) => (
-              <TestimonialCard key={`row2-${index}`} testimonial={testimonial} />
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="text-center mt-16 px-4"
-        >
-          <p className="text-muted-foreground text-lg mb-6">¿Querés ser parte de estas historias de éxito?</p>
-          <a
-            href="https://wa.me/5492236011753?text=Hola! Me gustaría obtener una cotización de seguros"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors duration-300"
-          >
-            Comenzar ahora
-          </a>
-        </motion.div>
+        {/* Columnas tipo mampostería: cada testimonio ocupa lo que mide su texto */}
+        <ul className="mt-12 gap-4 sm:columns-2 lg:columns-3">
+          {TESTIMONIOS.map((t, i) => (
+            <Aparecer
+              as="li"
+              key={t.nombre}
+              demora={(i % 3) * 0.06}
+              className="mb-4 break-inside-avoid rounded-2xl border border-linea bg-white p-6"
+            >
+              <div className="flex gap-0.5 text-dorado" role="img" aria-label="5 de 5 estrellas">
+                {Array.from({ length: 5 }, (_, s) => (
+                  <Star key={s} className="h-4 w-4 fill-current" aria-hidden="true" />
+                ))}
+              </div>
+              <blockquote className="mt-4 leading-relaxed text-tinta">“{t.texto}”</blockquote>
+              <p className="mt-5 font-semibold text-tinta">{t.nombre}</p>
+              <p className="text-sm text-gris-texto">{t.detalle}</p>
+            </Aparecer>
+          ))}
+        </ul>
       </div>
     </section>
-  )
-}
-
-function TestimonialCard({ testimonial }: { testimonial: (typeof testimonials)[0] }) {
-  return (
-    <article className="flex-shrink-0 w-[380px] group">
-      <div className="relative h-full p-6 rounded-2xl bg-card/40 backdrop-blur-sm border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10">
-        {/* Quote icon */}
-        <div className="absolute top-6 right-6 opacity-10 group-hover:opacity-20 transition-opacity">
-          <Quote className="w-12 h-12 text-primary" />
-        </div>
-
-        {/* Rating */}
-        <div className="flex gap-1 mb-4">
-          {[...Array(testimonial.rating)].map((_, i) => (
-            <Star key={i} className="w-4 h-4 fill-primary text-primary" />
-          ))}
-        </div>
-
-        {/* Testimonial text */}
-        <p className="text-muted-foreground text-sm leading-relaxed mb-6 relative z-10">{testimonial.text}</p>
-
-        {/* Author info */}
-        <div className="flex items-center gap-3 pt-4 border-t border-border">
-          {/* Avatar with initials */}
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">{testimonial.initials}</span>
-          </div>
-
-          {/* Name and role */}
-          <div className="flex-1 min-w-0">
-            <h3 className="text-foreground font-semibold text-sm truncate">{testimonial.name}</h3>
-            <p className="text-muted-foreground text-xs truncate">{testimonial.role}</p>
-            <p className="text-primary text-xs truncate">{testimonial.insurance}</p>
-          </div>
-        </div>
-      </div>
-    </article>
   )
 }
