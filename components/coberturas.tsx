@@ -1,32 +1,90 @@
 "use client"
 
 import { useRef, useState, type KeyboardEvent } from "react"
-import Image from "next/image"
 import { AnimatePresence, motion, type Variants } from "framer-motion"
-import { Check, MessageCircle, Plus, X } from "lucide-react"
+import {
+  Bandage,
+  Beef,
+  Bike,
+  Car,
+  Flower2,
+  HardHat,
+  Heart,
+  House,
+  MessageCircle,
+  Scale,
+  Stethoscope,
+  Store,
+  Tractor,
+  Truck,
+  Users,
+  Warehouse,
+  Wheat,
+  type LucideIcon,
+} from "lucide-react"
 import { COBERTURAS, PUBLICOS, whatsappUrl, type Cobertura, type Publico } from "@/lib/contenido"
-import { Aparecer } from "@/components/movimiento"
-import retrato from "@/public/veronica/retrato.jpg"
 
-const idDe = (publico: Publico, c: Cobertura) => `${publico}:${c.nombre}`
+const ICONOS: Record<string, LucideIcon> = {
+  auto: Car,
+  moto: Bike,
+  hogar: House,
+  vida: Heart,
+  accidentes: Bandage,
+  sepelio: Flower2,
+  flota: Truck,
+  comercio: Store,
+  rc: Scale,
+  "vida-colectivo": Users,
+  trabajo: HardHat,
+  salud: Stethoscope,
+  cultivos: Wheat,
+  maquinaria: Tractor,
+  hacienda: Beef,
+  "vehiculos-rurales": Truck,
+  instalaciones: Warehouse,
+  "personal-rural": Users,
+}
 
-const enLista = (nombres: string[]) =>
-  nombres.length < 2 ? nombres.join("") : `${nombres.slice(0, -1).join(", ")} y ${nombres.at(-1)}`
+// La cobertura protagonista de cada público va primero, en la tarjeta grande bordó
+const DESTACADA: Record<Publico, string> = {
+  personas: "Auto",
+  empresas: "Integral de comercio",
+  campo: "Cultivos",
+}
 
-const fila: Variants = {
-  oculto: { opacity: 0, y: 8 },
+// Bento de 6 columnas en escritorio: la grande ocupa 2×2 y las demás completan dos filas.
+// El color va por posición para que cada pestaña tenga el mismo ritmo: bordó, rosa, blanco, pizarra, rosa, blanco.
+const ICONO_ANCHA = "top-4 right-4 h-12 w-12 opacity-40 sm:top-5 sm:right-5 sm:h-20 sm:w-20"
+const ICONO_ANGOSTA = "top-4 right-4 h-10 w-10 opacity-40 sm:h-12 sm:w-12"
+// Angosta en mobile (una columna de dos) y ancha en escritorio (ocupa dos de seis)
+const ICONO_CRECE = "top-4 right-4 h-10 w-10 opacity-40 lg:top-5 lg:right-5 lg:h-20 lg:w-20"
+const TARJETAS = [
+  {
+    forma: "col-span-2 lg:row-span-2 min-h-[16rem] lg:min-h-[22rem]",
+    tono: "bg-bordo text-white",
+    icono: "-top-4 -right-4 h-40 w-40 opacity-25 sm:h-56 sm:w-56 lg:-top-6 lg:-right-6 lg:h-72 lg:w-72",
+  },
+  { forma: "col-span-2 min-h-[11rem] lg:min-h-[15rem]", tono: "bg-rosa text-bordo", icono: ICONO_ANCHA },
+  { forma: "min-h-[11rem] lg:min-h-[15rem]", tono: "bg-white text-tinta ring-1 ring-linea", icono: ICONO_ANGOSTA },
+  { forma: "min-h-[11rem] lg:min-h-[15rem]", tono: "bg-pizarra text-white", icono: ICONO_ANGOSTA },
+  { forma: "lg:col-span-2 min-h-[11rem] lg:min-h-[15rem]", tono: "bg-rosa text-bordo", icono: ICONO_CRECE },
+  { forma: "lg:col-span-2 min-h-[11rem] lg:min-h-[15rem]", tono: "bg-white text-tinta ring-1 ring-linea", icono: ICONO_CRECE },
+]
+
+const tarjeta: Variants = {
+  oculto: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } },
 }
 
-// Una lista de preguntas, no un catálogo: lo memorable son las situaciones en serif; todo lo demás queda callado.
+function ordenar(publico: Publico): Cobertura[] {
+  const lista = COBERTURAS[publico]
+  const primera = lista.find((c) => c.nombre === DESTACADA[publico])
+  return primera ? [primera, ...lista.filter((c) => c !== primera)] : lista
+}
+
 export function Coberturas() {
   const [activo, setActivo] = useState<Publico>("personas")
-  const [elegidas, setElegidas] = useState<string[]>([])
   const pestanas = useRef<(HTMLButtonElement | null)[]>([])
-  const publico = PUBLICOS.find((p) => p.id === activo)!
-
-  const alternar = (id: string) =>
-    setElegidas((actuales) => (actuales.includes(id) ? actuales.filter((x) => x !== id) : [...actuales, id]))
 
   // Flechas izquierda/derecha entre pestañas, como pide el patrón de tabs de ARIA
   const alTeclear = (e: KeyboardEvent, i: number) => {
@@ -38,29 +96,20 @@ export function Coberturas() {
     pestanas.current[siguiente]?.focus()
   }
 
-  const nombresElegidos = elegidas.map((id) => id.split(":")[1])
-  const mensaje = `Hola Verónica, quiero consultar por: ${enLista(nombresElegidos.map((n) => n.toLowerCase()))}.`
-
   return (
-    <section id="coberturas" aria-labelledby="coberturas-titulo" className="bg-fondo-suave py-20 lg:py-28">
+    <section id="coberturas" aria-labelledby="coberturas-titulo" className="bg-fondo-suave py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <Aparecer>
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <h2 id="coberturas-titulo" className="font-serif text-4xl leading-tight font-medium text-tinta lg:text-5xl">
-            ¿Qué te preocupa?
+            ¿Qué querés asegurar?
           </h2>
-          <p className="mt-4 max-w-xl text-lg leading-relaxed text-pretty text-gris-texto">
-            Marcá lo que te pueda pasar y mandámelo todo junto en un solo mensaje.
-          </p>
-        </Aparecer>
 
-        <div
-          role="tablist"
-          aria-label="Para quién es el seguro"
-          className="mt-10 inline-flex w-full max-w-md rounded-full border border-linea bg-white p-1 sm:w-auto"
-        >
-          {PUBLICOS.map((p, i) => {
-            const marcadas = elegidas.filter((id) => id.startsWith(`${p.id}:`)).length
-            return (
+          <div
+            role="tablist"
+            aria-label="Para quién es el seguro"
+            className="inline-flex w-full max-w-md self-start rounded-full border border-linea bg-white p-1 sm:w-auto sm:self-auto"
+          >
+            {PUBLICOS.map((p, i) => (
               <button
                 key={p.id}
                 ref={(el) => {
@@ -82,170 +131,73 @@ export function Coberturas() {
                     transition={{ type: "spring", stiffness: 420, damping: 36 }}
                   />
                 )}
-                <span className="relative inline-flex items-center gap-1.5">
-                  {p.nombre}
-                  {marcadas > 0 && (
-                    <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-dorado px-1 text-[10px] text-white">
-                      <span className="sr-only">, elegidas: </span>
-                      {marcadas}
-                    </span>
-                  )}
-                </span>
+                <span className="relative">{p.nombre}</span>
               </button>
-            )
-          })}
+            ))}
+          </div>
         </div>
 
-        <div
-          id="panel-coberturas"
-          role="tabpanel"
-          aria-labelledby={`tab-${activo}`}
-          className="mt-10 grid gap-12 lg:grid-cols-[minmax(0,1fr)_17rem] lg:gap-20"
-        >
-          <AnimatePresence mode="wait">
+        <div id="panel-coberturas" role="tabpanel" aria-labelledby={`tab-${activo}`} className="mt-10">
+          {/* Solo se anima al cambiar de pestaña: responde a lo que tocaste */}
+          <AnimatePresence mode="wait" initial={false}>
             <motion.ul
               key={activo}
               initial="oculto"
-              whileInView="visible"
-              viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+              animate="visible"
               exit={{ opacity: 0, transition: { duration: 0.12 } }}
-              variants={{ visible: { transition: { staggerChildren: 0.04 } } }}
-              className="border-y border-linea"
+              variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+              className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-6"
             >
-              {COBERTURAS[activo].map((c) => {
-                const id = idDe(activo, c)
-                const elegida = elegidas.includes(id)
+              {ordenar(activo).map((c, i) => {
+                const Icono = ICONOS[c.icono] ?? Heart
+                const { forma, tono, icono } = TARJETAS[i % TARJETAS.length]
+                const grande = i === 0
                 return (
-                  <motion.li key={c.nombre} variants={fila} className="border-b border-linea last:border-b-0">
-                    <button
-                      type="button"
-                      aria-pressed={elegida}
-                      onClick={() => alternar(id)}
-                      className="group flex w-full items-start justify-between gap-6 py-6 text-left"
+                  <motion.li key={c.nombre} variants={tarjeta} className={forma}>
+                    <a
+                      href={whatsappUrl(`Hola Verónica, quiero cotizar un seguro de ${c.nombre.toLowerCase()}.`)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`group relative flex h-full flex-col justify-end overflow-hidden rounded-3xl p-5 transition-transform duration-300 hover:-translate-y-1 sm:p-7 ${tono}`}
                     >
-                      <span>
-                        <span
-                          className={`block font-serif text-2xl leading-snug font-medium transition-colors lg:text-[1.7rem] ${
-                            elegida ? "text-bordo" : "text-tinta group-hover:text-bordo"
-                          }`}
-                        >
-                          {c.situacion}
-                        </span>
-                        <span className="mt-2 block max-w-2xl text-sm leading-relaxed text-gris-texto">
-                          <span className="font-semibold text-tinta">{c.nombre}.</span>{" "}
-                          {enLista(c.incluye.map((x, i) => (i === 0 ? x : x.charAt(0).toLowerCase() + x.slice(1))))}.
-                        </span>
-                      </span>
-                      <span
+                      <Icono
                         aria-hidden="true"
-                        className={`mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full border transition-colors ${
-                          elegida ? "border-bordo bg-bordo text-white" : "border-linea text-tinta group-hover:border-bordo group-hover:text-bordo"
+                        strokeWidth={1}
+                        className={`absolute transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-6 ${icono}`}
+                      />
+                      <span
+                        className={`relative block font-serif leading-none font-medium text-balance ${
+                          grande ? "text-4xl sm:text-5xl lg:text-6xl" : "text-2xl sm:text-3xl"
                         }`}
                       >
-                        <AnimatePresence mode="wait" initial={false}>
-                          <motion.span
-                            key={elegida ? "si" : "no"}
-                            initial={{ scale: 0.4, rotate: -60, opacity: 0 }}
-                            animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                            exit={{ scale: 0.4, opacity: 0 }}
-                            transition={{ duration: 0.18 }}
-                            className="inline-flex"
-                          >
-                            {elegida ? <Check className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
-                          </motion.span>
-                        </AnimatePresence>
+                        {grande ? c.nombre : (c.etiqueta ?? c.nombre)}
                       </span>
-                    </button>
+                      <span className={`relative mt-2 block opacity-80 ${grande ? "text-base sm:text-lg" : "text-sm"}`}>{c.corto}</span>
+                      <span className="relative mt-4 inline-flex items-center gap-2 text-sm font-semibold sm:mt-5">
+                        <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                        Cotizar
+                        <span className="sr-only"> {c.nombre} por WhatsApp</span>
+                      </span>
+                    </a>
                   </motion.li>
                 )
               })}
             </motion.ul>
           </AnimatePresence>
-
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <figure>
-              <div className="flex items-center gap-3">
-                <Image src={retrato} alt="" sizes="44px" className="h-11 w-11 rounded-full object-cover object-top" />
-                <figcaption className="text-sm leading-tight text-gris-texto">
-                  <span className="block font-semibold text-tinta">Un consejo</span>
-                  de Verónica
-                </figcaption>
-              </div>
-              <AnimatePresence mode="wait" initial={false}>
-                <motion.blockquote
-                  key={activo}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="mt-4 font-serif text-lg leading-snug text-tinta italic"
-                >
-                  {publico.consejo}
-                </motion.blockquote>
-              </AnimatePresence>
-            </figure>
-            <p className="mt-8 text-sm leading-relaxed text-gris-texto">
-              ¿No está lo que buscás?{" "}
-              <a
-                href={whatsappUrl("Hola Verónica, quiero consultar por un seguro")}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold text-bordo underline underline-offset-4 hover:text-bordo-oscuro"
-              >
-                Contame qué necesitás
-              </a>
-              .
-            </p>
-          </aside>
         </div>
 
-        {/* Bandeja: queda pegada abajo mientras recorrés la sección y junta todo en un solo mensaje */}
-        <div aria-live="polite" className="sticky bottom-4 z-30 mr-[4.5rem] sm:mr-0">
-          <AnimatePresence>
-            {elegidas.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 40 }}
-                transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                className="mt-8 flex items-center gap-3 rounded-2xl bg-tinta p-2.5 pl-4 text-white shadow-[0_20px_40px_-20px_rgba(34,29,28,0.8)] sm:mx-auto sm:max-w-2xl sm:gap-4"
-              >
-                <motion.span
-                  key={elegidas.length}
-                  initial={{ scale: 1.5 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 18 }}
-                  className="flex h-7 min-w-7 flex-none items-center justify-center rounded-full bg-dorado px-2 text-sm font-semibold"
-                >
-                  {elegidas.length}
-                </motion.span>
-                <p className="min-w-0 flex-1 text-sm leading-tight">
-                  <span className="sm:hidden">{elegidas.length === 1 ? "elegida" : "elegidas"}</span>
-                  <span className="hidden text-white/60 sm:inline">Te interesa: </span>
-                  <span className="hidden sm:line-clamp-1">{enLista(nombresElegidos)}</span>
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setElegidas([])}
-                  aria-label="Vaciar la selección"
-                  className="flex-none rounded-full p-2 text-white/60 hover:bg-white/10 hover:text-white"
-                >
-                  <X className="h-4 w-4" aria-hidden="true" />
-                </button>
-                <a
-                  href={whatsappUrl(mensaje)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex flex-none items-center gap-2 rounded-xl bg-bordo px-4 py-2.5 text-sm font-semibold transition-colors hover:bg-bordo-oscuro"
-                >
-                  <MessageCircle className="h-4 w-4" aria-hidden="true" />
-                  <span className="sm:hidden">Consultar</span>
-                  <span className="hidden sm:inline">Consultar por WhatsApp</span>
-                </a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+        <p className="mt-8 text-gris-texto">
+          ¿No está la tuya?{" "}
+          <a
+            href={whatsappUrl("Hola Verónica, quiero consultar por un seguro")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-semibold text-bordo underline underline-offset-4 hover:text-bordo-oscuro"
+          >
+            Escribime y lo vemos
+          </a>
+          .
+        </p>
       </div>
     </section>
   )

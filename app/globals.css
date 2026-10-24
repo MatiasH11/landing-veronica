@@ -50,6 +50,7 @@
   --gris-texto: #5E5856;
   --linea: #E7E2DE;
   --fondo-suave: #F5F3F1;
+  --rosa: #FFE2E6;
 }
 
 .dark {
@@ -100,6 +101,7 @@
   --color-gris-texto: var(--gris-texto);
   --color-linea: var(--linea);
   --color-fondo-suave: var(--fondo-suave);
+  --color-rosa: var(--rosa);
   --font-mono: "Geist Mono", "Geist Mono Fallback", monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);

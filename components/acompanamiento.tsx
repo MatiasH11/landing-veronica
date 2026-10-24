@@ -3,7 +3,7 @@ import { Recorrido } from "@/components/recorrido"
 
 export function Acompanamiento() {
   return (
-    <section id="acompanamiento" aria-labelledby="acompanamiento-titulo" className="bg-white py-20 lg:py-28">
+    <section id="acompanamiento" aria-labelledby="acompanamiento-titulo" className="bg-white py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-16">
           <Aparecer>
@@ -13,8 +13,7 @@ export function Acompanamiento() {
           </Aparecer>
           <Aparecer demora={0.08}>
             <p className="max-w-xl text-lg leading-relaxed text-gris-texto lg:pt-3">
-              Trabajo de forma independiente, con las mejores compañías del mercado. Eso me deja recomendarte lo que te
-              conviene a vos y, sobre todo, estar presente en cada etapa: no sos un número de póliza.
+              Trabajo con las mejores compañías y estoy en cada etapa. No sos un número de póliza.
             </p>
           </Aparecer>
         </div>

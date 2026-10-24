@@ -84,7 +84,7 @@ export function Recorrido() {
                 ref={(el) => {
                   pasos.current[i] = el
                 }}
-                className="relative lg:flex lg:min-h-[58vh] lg:items-center lg:pl-16"
+                className="relative lg:flex lg:min-h-[34vh] lg:items-center lg:pl-16"
               >
                 <div>
                   <span

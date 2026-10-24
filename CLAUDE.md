@@ -36,7 +36,9 @@ pnpm lint    # el script existe pero eslint no está instalado: hoy falla
   sticky, `<Movimiento>` (MotionConfig con `reducedMotion="user"`) y Analytics.
 - `app/page.tsx`: `Hero` (#inicio) · `Acompanamiento` (#acompanamiento) · `Coberturas` (#coberturas) · `AboutMe`
   (#sobre-mi) · `Testimonials` (#testimonios) · `EducacionVial` · `ContactForm` (#contacto) · `Footer` ·
-  `CtaWhatsapp` (barra fija, solo mobile).
+  `BotonFlotante` (WhatsApp flotante).
+- `components/coberturas.tsx`: grilla bento con pestañas Personas/Empresas/Campo; la cobertura protagonista de cada
+  público va en la tarjeta grande bordó. Cada tarjeta abre WhatsApp con la consulta escrita.
 - `lib/contenido.ts`: **todo el contenido** (WhatsApp, matrícula, coberturas de Personas/Empresas/Campo, pasos del
   acompañamiento, testimonios reales, educación vial). Se edita ahí, no en los componentes.
 - `components/movimiento.tsx`: `Aparecer`, la animación de entrada de secciones (corta, una vez, sin usar en el hero).

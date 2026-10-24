@@ -136,7 +136,7 @@ export function ContactForm() {
             Hablemos de tu seguro
           </h2>
           <p className="mt-4 max-w-md text-lg leading-relaxed text-gris-texto">
-            La consulta no tiene costo. Lo más rápido es WhatsApp; si preferís, dejame tus datos y te respondo yo.
+            La consulta no tiene costo. Lo más rápido es WhatsApp.
           </p>
 
           <a

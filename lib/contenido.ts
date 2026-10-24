@@ -26,33 +26,19 @@ export const SECCIONES = [
 
 export type Publico = "personas" | "empresas" | "campo"
 
-// Cada público lleva un consejo de Verónica.
-// Los consejos son borradores: Verónica tiene que escribirlos o validarlos antes de publicar.
-export const PUBLICOS: { id: Publico; nombre: string; bajada: string; consejo: string }[] = [
-  {
-    id: "personas",
-    nombre: "Personas",
-    bajada: "Para vos, tu familia, tu casa y lo que usás todos los días.",
-    consejo: "Antes de renovar, fijate si tu póliza cubre granizo y hasta qué monto. Es de las cosas que más conviene revisar cada año.",
-  },
-  {
-    id: "empresas",
-    nombre: "Empresas",
-    bajada: "Para comercios, PyMEs y profesionales independientes.",
-    consejo: "Asegurá la mercadería y los equipos por lo que valen hoy, no por lo que valían cuando abriste. Actualizar las sumas evita sorpresas.",
-  },
-  {
-    id: "campo",
-    nombre: "Campo",
-    bajada: "Asesoramiento integral para el productor: la cosecha, la hacienda, las máquinas y la gente.",
-    consejo: "Contratá la cobertura de granizo antes de que arranque la campaña. Si esperás a ver el cielo, puede ser tarde.",
-  },
+export const PUBLICOS: { id: Publico; nombre: string }[] = [
+  { id: "personas", nombre: "Personas" },
+  { id: "empresas", nombre: "Empresas" },
+  { id: "campo", nombre: "Campo" },
 ]
 
+// Cada cobertura se muestra como una respuesta rápida de chat: ícono y nombre (o "etiqueta" si el nombre es largo).
+// "corto" es el detalle que aparece al pasar el mouse. "icono" es la clave del ícono de lucide en coberturas.tsx.
 export interface Cobertura {
   nombre: string
-  // La pregunta que alguien se hace antes de saber qué seguro necesita: es el título de la tarjeta
-  situacion: string
+  etiqueta?: string
+  corto: string
+  icono: string
   descripcion: string
   incluye: string[]
 }
@@ -61,37 +47,44 @@ export const COBERTURAS: Record<Publico, Cobertura[]> = {
   personas: [
     {
       nombre: "Auto",
-      situacion: "¿Y si me roban el auto o me chocan?",
+      corto: "Robo, choque y granizo",
+      icono: "auto",
       descripcion: "Desde responsabilidad civil hasta todo riesgo, con auxilio mecánico.",
       incluye: ["Responsabilidad civil", "Robo e incendio", "Granizo (según el plan)", "Grúa 24 h"],
     },
     {
       nombre: "Moto",
-      situacion: "¿Y si me roban la moto en la puerta del trabajo?",
+      corto: "Robo y responsabilidad civil",
+      icono: "moto",
       descripcion: "Para el uso de todos los días, en la ciudad o en la ruta.",
       incluye: ["Responsabilidad civil", "Robo total", "Asistencia en ruta"],
     },
     {
       nombre: "Hogar",
-      situacion: "¿Y si se rompe un caño y le arruino el techo al vecino?",
+      corto: "Incendio, robo y agua",
+      icono: "hogar",
       descripcion: "Combinado familiar: tu casa y lo que hay adentro, ante varios riesgos a la vez.",
       incluye: ["Incendio", "Robo de contenido", "Daños por agua", "Responsabilidad civil"],
     },
     {
       nombre: "Vida",
-      situacion: "Si me pasa algo, ¿cómo quedan los míos?",
+      corto: "Respaldo para tu familia",
+      icono: "vida",
       descripcion: "Un respaldo económico para tu familia si a vos te pasa algo.",
       incluye: ["Fallecimiento", "Invalidez total", "Beneficiarios a tu elección"],
     },
     {
       nombre: "Accidentes personales",
-      situacion: "¿Y si me accidento trabajando por mi cuenta?",
+      etiqueta: "Accidentes",
+      corto: "Trabajo, calle y deporte",
+      icono: "accidentes",
       descripcion: "Una indemnización ante accidentes, en el trabajo, en la calle o haciendo deporte.",
       incluye: ["Muerte accidental", "Invalidez", "Gastos médicos"],
     },
     {
       nombre: "Sepelio",
-      situacion: "¿Puedo dejar resuelto el sepelio de mi familia?",
+      corto: "Resuelto de antemano",
+      icono: "sepelio",
       descripcion: "El servicio resuelto de antemano, para que nadie tenga que ocuparse en ese momento.",
       incluye: ["Servicio completo", "Grupo familiar", "Atención inmediata"],
     },
@@ -99,37 +92,45 @@ export const COBERTURAS: Record<Publico, Cobertura[]> = {
   empresas: [
     {
       nombre: "Flota",
-      situacion: "¿Puedo tener todos los vehículos en una sola póliza?",
+      corto: "Todos los vehículos juntos",
+      icono: "flota",
       descripcion: "Todos los vehículos de la empresa en una sola gestión y una sola renovación.",
       incluye: ["Responsabilidad civil", "Robo e incendio", "Asistencia 24 h"],
     },
     {
       nombre: "Integral de comercio",
-      situacion: "¿Y si se inunda el local o me roban la mercadería?",
+      etiqueta: "Comercio",
+      corto: "Local, mercadería y equipos",
+      icono: "comercio",
       descripcion: "El local, la mercadería y los equipos, en una misma póliza.",
       incluye: ["Incendio", "Robo", "Cristales", "Equipos electrónicos"],
     },
     {
       nombre: "Responsabilidad civil",
-      situacion: "¿Y si un cliente se lastima en mi local?",
+      corto: "Reclamos de terceros",
+      icono: "rc",
       descripcion: "Respaldo ante reclamos de terceros por daños que cause tu actividad.",
       incluye: ["Daños a terceros", "Gastos de defensa", "Responsabilidad profesional"],
     },
     {
       nombre: "Vida colectivo",
-      situacion: "¿Cómo le doy a mi equipo un beneficio que se note?",
+      corto: "Un beneficio para tu equipo",
+      icono: "vida-colectivo",
       descripcion: "Un beneficio concreto para tu equipo y sus familias.",
       incluye: ["Obligatorio y optativo", "Altas y bajas simples"],
     },
     {
       nombre: "Accidentes de trabajo",
-      situacion: "Contraté a mi primer empleado, ¿qué necesito?",
+      etiqueta: "ART",
+      corto: "ART y accidentes",
+      icono: "trabajo",
       descripcion: "Cobertura para tu gente ante accidentes en el trabajo o en el trayecto.",
       incluye: ["ART", "Accidentes personales", "Prestaciones médicas"],
     },
     {
       nombre: "Salud empresarial",
-      situacion: "¿Puedo sumar a mi equipo a un plan de salud?",
+      corto: "Planes corporativos",
+      icono: "salud",
       descripcion: "Planes de salud corporativos para el bienestar de tu equipo.",
       incluye: ["Planes corporativos", "Grupo familiar", "Comparación de cartillas"],
     },
@@ -137,37 +138,45 @@ export const COBERTURAS: Record<Publico, Cobertura[]> = {
   campo: [
     {
       nombre: "Cultivos",
-      situacion: "¿Y si cae granizo antes de la cosecha?",
+      corto: "Granizo y multirriesgo",
+      icono: "cultivos",
       descripcion: "La cosecha protegida desde la siembra hasta que sale del lote.",
       incluye: ["Granizo", "Multirriesgo agrícola", "Incendio"],
     },
     {
       nombre: "Maquinaria agrícola",
-      situacion: "¿Y si la cosechadora se rompe en plena campaña?",
+      etiqueta: "Maquinaria",
+      corto: "Tractores y cosechadoras",
+      icono: "maquinaria",
       descripcion: "Tractores, cosechadoras y equipos, trabajando o en tránsito.",
       incluye: ["Daños propios", "Robo", "Responsabilidad civil"],
     },
     {
       nombre: "Hacienda",
-      situacion: "¿Y si pierdo animales en un traslado?",
+      corto: "En el campo o en traslado",
+      icono: "hacienda",
       descripcion: "Los animales del establecimiento, en el campo o en traslado.",
       incluye: ["Muerte por accidente", "Transporte", "Robo"],
     },
     {
       nombre: "Vehículos rurales",
-      situacion: "¿Me cubre la camioneta en los caminos de tierra?",
+      corto: "Camionetas y utilitarios",
+      icono: "vehiculos-rurales",
       descripcion: "Camionetas y utilitarios que se usan en caminos rurales y en la ruta.",
       incluye: ["Responsabilidad civil", "Robo e incendio", "Asistencia"],
     },
     {
       nombre: "Instalaciones del establecimiento",
-      situacion: "¿Y si un temporal me vuela el techo del galpón?",
+      etiqueta: "Galpones e instalaciones",
+      corto: "Galpones, silos y casa",
+      icono: "instalaciones",
       descripcion: "Galpones, silos, casa y equipos del campo.",
       incluye: ["Incendio", "Vendaval", "Robo"],
     },
     {
       nombre: "Personal rural",
-      situacion: "¿Qué necesito para la gente que trabaja en el campo?",
+      corto: "ART y vida obligatorio",
+      icono: "personal-rural",
       descripcion: "Cobertura para quienes trabajan en el campo.",
       incluye: ["ART", "Vida obligatorio", "Accidentes personales"],
     },
@@ -192,12 +201,11 @@ export const ACOMPANAMIENTO: {
     momento: "Antes",
     cuando: "Marzo",
     titulo: "Escucho y comparo",
-    texto:
-      "Me contás qué tenés y qué te preocupa. Comparo entre las mejores compañías y te muestro las opciones con el mejor precio para lo que necesitás, no la más cara.",
+    texto: "Comparo compañías y te muestro la mejor opción para vos, no la más cara.",
     chat: {
       cliente: { texto: "Hola Vero, tengo un Gol 2018. ¿Qué seguro me conviene?", hora: "10:02" },
       veronica: {
-        texto: "¡Hola! Te comparé tres compañías. Esta te cubre granizo y es la que mejor sale para el uso que le das. ¿Te la explico?",
+        texto: "¡Hola! Comparé tres compañías: esta te cubre granizo y es la que mejor sale. ¿Te la explico?",
         hora: "10:15",
       },
     },
@@ -206,12 +214,11 @@ export const ACOMPANAMIENTO: {
     momento: "Durante",
     cuando: "Una semana después",
     titulo: "Te explico tu póliza",
-    texto:
-      "Antes de firmar, repasamos qué cubre y qué no. Sin letra chica ni sorpresas, y con renovaciones que reviso por vos cada año.",
+    texto: "Repasamos qué cubre y qué no, sin letra chica.",
     chat: {
       cliente: { texto: "Antes de firmar: si me roban las ruedas, ¿estoy cubierto?", hora: "16:40" },
       veronica: {
-        texto: "En este plan, no. Si te importa, lo sumamos por una diferencia chica. Te mando un resumen de todo lo que cubre.",
+        texto: "En este plan, no. Lo podemos sumar por una diferencia chica.",
         hora: "16:48",
       },
     },
@@ -220,12 +227,11 @@ export const ACOMPANAMIENTO: {
     momento: "Después",
     cuando: "Siete meses después",
     titulo: "Estoy cuando pasa algo",
-    texto:
-      "Si tenés un siniestro, me llamás a mí, no a un 0800. Te guío con la denuncia, los papeles y los tiempos hasta que se resuelva.",
+    texto: "Si pasa algo, me llamás a mí, no a un 0800.",
     chat: {
       cliente: { texto: "Me chocaron en la Costa 😟 ¿Qué hago?", hora: "19:31" },
       veronica: {
-        texto: "Tranqui, ¿estás bien? Sacale fotos a todo y pedile los datos del seguro al otro. Después te ayudo con la denuncia.",
+        texto: "Tranqui, ¿estás bien? Sacá fotos y pedile los datos del seguro. Yo te ayudo con la denuncia.",
         hora: "19:34",
       },
     },
